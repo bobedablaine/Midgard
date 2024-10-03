@@ -1,13 +1,16 @@
 import express from "express"
 import { mongoose } from "mongoose"
 //import User from "./model/user.js"
-//import userRoute from "./routes/user.route.js"
+
+import userRoute from "./routes/user.route.js"
+
 
 const app = express()
 
 
 app.use(express.json())
-//app.use("/user", userRoute) //creating a route for user related functions
+app.use("/user", userRoute) //creating a route for user related functions
+
 
 
 
