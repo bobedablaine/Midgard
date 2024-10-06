@@ -7,7 +7,7 @@ function App() {
         <div className="App">
 
             <div className='container' id='tasks-container'>
-                <span id='header'>Testing</span>
+                <h1 id='header'>Testing</h1>
                 {/* Populate with tasks from backend here */}
             </div>
         </div>
