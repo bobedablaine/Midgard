@@ -77,8 +77,8 @@ const ContentPage = () => {
                     <p>{currentContent}</p>
                     {selectedSubsection === null && (
                         <div className="image-box">
-                            <img src="image-placeholder.jpg" alt="Chemistry illustration" />
-                            <p>Study of macroscopic, atomic, subatomic, and particulate phenomena in chemical systems in terms of laws and concepts of physics.</p>
+                            <img src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2" alt="Chemistry illustration" />
+                            <p>Yay computer science :D .</p>
                         </div>
                     )}
                 </div>
