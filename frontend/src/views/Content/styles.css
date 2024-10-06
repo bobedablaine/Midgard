@@ -66,11 +66,15 @@ body {
     padding-left: 0;
 }
 
-.course-navigation ul li {
+.chapter-list {
+    padding-left: 0;
+}
+
+.chapter-item {
     padding: 5px 0;
 }
 
-.course-navigation ul li a {
+.chapter-item a {
     text-decoration: none;
     color: #007bff;
     cursor: pointer;
@@ -79,8 +83,30 @@ body {
     border-radius: 4px;
 }
 
-.course-navigation ul li a:hover {
+.chapter-item a:hover {
     background-color: #f0f0f0;
+}
+
+.subsection-list {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.subsection-item a {
+    text-decoration: none;
+    color: #555;
+    cursor: pointer;
+    display: block;
+    padding: 3px;
+    border-radius: 4px;
+}
+
+.subsection-item a:hover {
+    background-color: #eaeaea;
+}
+
+.selected {
+    font-weight: bold;
 }
 
 /* Main Content Styles */
