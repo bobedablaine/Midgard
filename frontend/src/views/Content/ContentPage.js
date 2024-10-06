@@ -1,80 +1,101 @@
 import React, { useState } from 'react';
 import textbookData from './TextbookData.js';
+import './styles.css';
 
-
-const Sidebar = ({ chapters, onSelect, selectedChapter }) => {
+const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapter, selectedSubsection }) => {
     return (
-      <div style={styles.sidebar}>
-        <h3>Table of Contents</h3>
-        <ul style={styles.sidebarList}>
-          {chapters.map((chapter, index) => (
-            <li
-              key={index}
-              style={{
-                ...styles.sidebarItem,
-                fontWeight: selectedChapter === index ? 'bold' : 'normal',
-                cursor: 'pointer',
-              }}
-              onClick={() => onSelect(index)}
-            >
-              {chapter.title}
-            </li>
-          ))}
-        </ul>
-      </div>
+        <aside className="sidebar">
+            <div className="subscribe-box">
+                <input type="email" placeholder="Enter your email" />
+                <button>Subscribe</button>
+                <p>Receive a weekly email containing the next unit.</p>
+            </div>
+            <div className="progress">
+                <label>Your progress</label>
+                <div className="progress-bar">
+                    <div className="progress-fill" style={{ width: '60%' }}></div>
+                </div>
+            </div>
+            <nav className="course-navigation">
+                <h3>Table of Contents</h3>
+                <ul className="chapter-list">
+                    {chapters.map((chapter, chapterIndex) => (
+                        <li key={chapterIndex} className="chapter-item">
+                            <a
+                                onClick={() => onSelectChapter(chapterIndex)}
+                                className={selectedChapter === chapterIndex ? 'selected' : ''}
+                            >
+                                {chapter.title}
+                            </a>
+                            {selectedChapter === chapterIndex && chapter.subsections && (
+                                <ul className="subsection-list">
+                                    {chapter.subsections.map((subsection, subsectionIndex) => (
+                                        <li key={subsectionIndex} className="subsection-item">
+                                            <a
+                                                onClick={() => onSelectSubsection(subsectionIndex)}
+                                                className={selectedSubsection === subsectionIndex ? 'selected' : ''}
+                                            >
+                                                {subsection.title}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        </aside>
     );
-  };
-  
-  const ContentPage = () => {
+};
+
+const ContentPage = () => {
     const [selectedChapter, setSelectedChapter] = useState(0);
-  
+    const [selectedSubsection, setSelectedSubsection] = useState(null);
+
+    const currentChapter = textbookData.chapters[selectedChapter];
+    const currentContent = selectedSubsection !== null ? currentChapter.subsections[selectedSubsection].content : currentChapter.content;
+
     return (
-      <div style={styles.container}>
-        <Sidebar 
-          chapters={textbookData.chapters} 
-          onSelect={setSelectedChapter} 
-          selectedChapter={selectedChapter}
-        />
-        <div style={styles.content}>
-          <h1>{textbookData.title}</h1>
-          <h2>by {textbookData.author}</h2>
-          <div style={styles.chapter}>
-            <h3>{textbookData.chapters[selectedChapter].title}</h3>
-            <p>{textbookData.chapters[selectedChapter].summary}</p>
-            <p>{textbookData.chapters[selectedChapter].content}</p>
-          </div>
+        <div className="container">
+            <Sidebar
+                chapters={textbookData.chapters}
+                onSelectChapter={(index) => {
+                    setSelectedChapter(index);
+                    setSelectedSubsection(null);
+                }}
+                onSelectSubsection={setSelectedSubsection}
+                selectedChapter={selectedChapter}
+                selectedSubsection={selectedSubsection}
+            />
+            <main className="main-content">
+                <h2>{textbookData.title}</h2>
+                <h3>by {textbookData.author}</h3>
+                <div className="chapter">
+                    <h3>{currentChapter.title}</h3>
+                    {selectedSubsection !== null && <h4>{currentChapter.subsections[selectedSubsection].title}</h4>}
+                    <p>{currentContent}</p>
+                    {selectedSubsection === null && (
+                        <div className="image-box">
+                            <img src="image-placeholder.jpg" alt="Chemistry illustration" />
+                            <p>Study of macroscopic, atomic, subatomic, and particulate phenomena in chemical systems in terms of laws and concepts of physics.</p>
+                        </div>
+                    )}
+                </div>
+            </main>
+            <section className="right-panel">
+                <div className="tools">
+                    <button>Test me</button>
+                    <button>Practical exercise</button>
+                    <button>Further reading</button>
+                </div>
+                <div className="chat-box">
+                    <div className="chat-message">Hi, any questions for me?</div>
+                    <input type="text" placeholder="Type your message..." />
+                </div>
+            </section>
         </div>
-      </div>
     );
-  };
-  
-  const styles = {
-    container: {
-      display: 'flex',
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '20px',
-      fontFamily: 'Arial, sans-serif',
-    },
-    sidebar: {
-      width: '200px',
-      borderRight: '1px solid #ccc',
-      padding: '10px',
-    },
-    sidebarList: {
-      listStyleType: 'none',
-      padding: 0,
-    },
-    sidebarItem: {
-      marginBottom: '10px',
-    },
-    content: {
-      flex: 1,
-      paddingLeft: '20px',
-    },
-    chapter: {
-      marginTop: '20px',
-    },
-  };
-  
-  export default ContentPage;
+};
+
+export default ContentPage;
