@@ -1,0 +1,200 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+.link-group {
+    display: flex;
+    flex-direction: column;
+
+}
+.infoSide {
+    position: relative;
+    top: 30%;
+    right: 10%;
+    text-align: left;
+    color: #747777;
+}
+
+.infoSide h1 {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+}
+
+.infoSide .par {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+
+.link-group a {
+    color: white;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.homeDiv {
+    padding: 10px 8%;
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+.formContainer {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.8) 50%);
+    max-width: 325px;
+    height: 400px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    border: solid 2px #fff;
+    position: relative;
+    top: -50px;
+    margin-right: 20px;
+}
+
+
+.formContainer input {
+    width: 80%;
+    height: 35px;
+    background: transparent;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+}
+
+.checkbox-group {
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    color: white;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.login-button {
+    width: 80%;
+    padding: 12px;
+    background: transparent;
+    color: white;
+    border-style: solid;
+    border-color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    transition: ease-in-out 0.3s;
+    margin-bottom: 20px;
+}
+
+#backgroundVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.overlay-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100%;
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    text-align: right;
+    margin-right: 100px;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 10px 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 26px;
+    transition: ease-in-out 0.3s;
+}
+.logo {
+    max-width: 380px; /* Adjust this value to your desired size */
+    height: auto; /* Maintain the aspect ratio */
+}
+
+.content {
+    margin-top: 0%;
+    position: relative;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.formContainer {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.8) 50%);
+    max-width: 325px;
+    height: 400px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    border: solid 2px #fff;
+}
+
+.formContainer input {
+    width: 80%;
+    height: 35px;
+    background: transparent;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    margin-top: 30px;
+    font-size: 15px;
+}
+
+.login-button {
+    width: 80%;
+    padding: 12px;
+    background: transparent;
+    color: white;
+    border: solid 1px #fff;
+    cursor: pointer;
+    font-size: 18px;
+    transition: ease-in-out 0.3s;
+}
+
+.login-button:hover {
+    border-color: #0874dc;
+    color: #0874dc;
+}
