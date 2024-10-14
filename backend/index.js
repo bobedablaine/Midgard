@@ -3,11 +3,13 @@ import { mongoose } from "mongoose"
 //import User from "./model/user.js"
 import dotenv from "dotenv";//imports secret key for use in login from .env file
 import userRoute from "./routes/user.route.js"
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+app.use(cors());
+const PORT = 3001;
 
 app.use(express.json());
 app.use("/user", userRoute); //creating a route for user related functions
