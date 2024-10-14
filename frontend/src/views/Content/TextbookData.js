@@ -1,97 +1,97 @@
-// Sample data for the textbook
+// Sample data for the cybersecurity textbook
 const textbookData = {
-  title: "Introduction to Computer Science",
+  title: "Introduction to Cybersecurity",
   author: "Jane Doe",
   chapters: [
     {
-      title: "Chapter 1: Basics of Programming",
-      summary: "An introduction to programming concepts and languages.",
-      content: "This chapter covers variables, data types, and basic syntax...",
+      title: "Chapter 1: Understanding Cybersecurity",
+      summary: "An introduction to the importance of cybersecurity and common threats.",
+      content: "This chapter covers the basics of cybersecurity, including why it's essential and the most common types of cyber threats...",
       subsections: [
         {
-          title: "1.1 Variables and Data Types",
-          content: "This subsection introduces variables and various data types used in programming..."
+          title: "1.1 What is Cybersecurity?",
+          content: "This subsection introduces the concept of cybersecurity and why it’s important in today's digital world..."
         },
         {
-          title: "1.2 Basic Syntax",
-          content: "This subsection covers the basic syntax rules of programming languages..."
+          title: "1.2 Common Cyber Threats",
+          content: "This subsection covers common threats such as malware, phishing, and ransomware..."
         },
         {
-          title: "1.3 Control Structures",
-          content: "This subsection explains conditional statements and loops..."
+          title: "1.3 Staying Safe Online",
+          content: "This subsection explains basic online safety practices like using strong passwords and enabling two-factor authentication..."
         },
         {
-          title: "1.4 Functions",
-          content: "This subsection introduces functions, how to define them, and how to use them..."
+          title: "1.4 How Hackers Operate",
+          content: "This subsection introduces various tactics hackers use to exploit vulnerabilities and how to defend against them..."
         }
       ]
     },
     {
-      title: "Chapter 2: Data Structures",
-      summary: "Understanding arrays, lists, stacks, and queues.",
-      content: "In this chapter, we explore how to organize data effectively...",
+      title: "Chapter 2: Recognizing Scams",
+      summary: "Learn how to identify and avoid different types of scams.",
+      content: "In this chapter, we explore common online scams and how to recognize and avoid them...",
       subsections: [
         {
-          title: "2.1 Arrays",
-          content: "This subsection covers arrays and how they are used to store multiple values..."
+          title: "2.1 Phishing Scams",
+          content: "This subsection explains phishing scams and how to recognize suspicious emails and links..."
         },
         {
-          title: "2.2 Lists",
-          content: "This subsection introduces lists and their dynamic nature..."
+          title: "2.2 Social Engineering Attacks",
+          content: "This subsection introduces social engineering and how attackers manipulate people into divulging confidential information..."
         },
         {
-          title: "2.3 Stacks and Queues",
-          content: "This subsection explains stacks and queues, and their applications..."
+          title: "2.3 Tech Support Scams",
+          content: "This subsection covers tech support scams, how they work, and how to avoid falling victim to them..."
         },
         {
-          title: "2.4 Hash Tables",
-          content: "This subsection covers hash tables, how they work, and their efficiency..."
+          title: "2.4 Financial Fraud",
+          content: "This subsection explains financial fraud, including credit card fraud and identity theft, and tips for preventing it..."
         }
       ]
     },
     {
-      title: "Chapter 3: Algorithms",
-      summary: "A deep dive into sorting and searching algorithms.",
-      content: "We will learn about different sorting methods and their efficiencies...",
+      title: "Chapter 3: Protecting Your Devices",
+      summary: "Learn how to secure your personal devices against cyber attacks.",
+      content: "We will learn about securing devices like computers and smartphones from cyber threats...",
       subsections: [
         {
-          title: "3.1 Sorting Algorithms",
-          content: "This subsection covers various sorting algorithms like bubble sort, merge sort, etc..."
+          title: "3.1 Securing Your Computer",
+          content: "This subsection covers essential practices for securing your computer, such as updating software and using firewalls..."
         },
         {
-          title: "3.2 Searching Algorithms",
-          content: "This subsection introduces linear and binary search algorithms..."
+          title: "3.2 Mobile Device Security",
+          content: "This subsection introduces best practices for securing your smartphone, including app permissions and locking your device..."
         },
         {
-          title: "3.3 Graph Algorithms",
-          content: "This subsection explores graph traversal algorithms like BFS and DFS..."
+          title: "3.3 Avoiding Malicious Software",
+          content: "This subsection explains how to identify and avoid malware, including viruses, trojans, and spyware..."
         },
         {
-          title: "3.4 Dynamic Programming",
-          content: "This subsection introduces dynamic programming and solving complex problems efficiently..."
+          title: "3.4 Backing Up Your Data",
+          content: "This subsection covers the importance of backing up your data and strategies to keep it safe..."
         }
       ]
     },
     {
-      title: "Chapter 4: Object-Oriented Programming",
-      summary: "Principles of OOP and its applications.",
-      content: "This chapter introduces classes, objects, inheritance, and polymorphism...",
+      title: "Chapter 4: Personal Privacy Online",
+      summary: "Principles of protecting your personal information online.",
+      content: "This chapter focuses on maintaining personal privacy while using the internet and social media...",
       subsections: [
         {
-          title: "4.1 Classes and Objects",
-          content: "This subsection explains what classes and objects are in OOP..."
+          title: "4.1 Protecting Your Identity",
+          content: "This subsection explains how to protect your identity online, including using aliases and avoiding oversharing on social media..."
         },
         {
-          title: "4.2 Inheritance",
-          content: "This subsection covers the concept of inheritance and code reuse..."
+          title: "4.2 Managing Your Digital Footprint",
+          content: "This subsection covers the concept of a digital footprint and how to control what information you leave behind online..."
         },
         {
-          title: "4.3 Polymorphism",
-          content: "This subsection introduces polymorphism and its advantages in programming..."
+          title: "4.3 Safe Browsing Habits",
+          content: "This subsection introduces best practices for browsing the internet safely, including using secure websites and VPNs..."
         },
         {
-          title: "4.4 Encapsulation",
-          content: "This subsection explains encapsulation, data hiding, and why it's important in OOP..."
+          title: "4.4 Privacy Settings on Social Media",
+          content: "This subsection explains how to adjust privacy settings on social media platforms to keep your personal information safe..."
         }
       ]
     }
