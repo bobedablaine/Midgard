@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './LoginPage.css';
 
 const LoginPage = ({ onLogin }) => {
@@ -7,15 +8,41 @@ const LoginPage = ({ onLogin }) => {
     const [loginError, setLoginError] = useState('');
 
     // Mock login function
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoginError('');
+
+        try {
+            const response = await axios.post('http://localhost:3001/user/login', {
+                email,
+                password,
+            });
+
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+            onLogin();
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 401) {
+                    setLoginError('Invalid login credentials');
+                } else {
+                    setLoginError('An error occurred. Please try again later.');
+                }
+            } else if (error.request) {
+                setLoginError('No response from server. Please try again later.');
+            } else {
+                setLoginError('An error occurred. Please try again later.');
+            }
+        }
+/*
         if (email === 'mpinzon@csu.fullerton.edu' && password === 'test') {
             onLogin();
         } else {
             setLoginError('Invalid login credentials');
         }
+*/
     };
+
 
     return (
         <div id="home" className="homeDiv">
