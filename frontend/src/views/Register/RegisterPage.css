@@ -71,23 +71,7 @@
     margin-top: 30px;
 }
 
-.checkbox-group {
-    align-items: center;
-    justify-content: flex-start;
 
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-}
-
-.checkbox-group label {
-    color: white;
-    font-size: 16px;
-    vertical-align: middle;
-}
 
 .login-button {
     width: 80%;
@@ -163,7 +147,7 @@ nav ul li a {
 .formContainer {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.8) 50%);
     max-width: 325px;
-    height: 400px;
+    height: 450px;
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -172,6 +156,7 @@ nav ul li a {
     text-align: center;
     color: #fff;
     border: solid 2px #fff;
+    position: absolute;
 }
 
 .formContainer input {
@@ -198,4 +183,16 @@ nav ul li a {
 .login-button:hover {
     border-color: #0874dc;
     color: #0874dc;
+}
+
+
+
+#registerTitle {
+    font-size: 24px;
+    display:flex;
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    color:gray;
+    padding-left: 40px;
 }
