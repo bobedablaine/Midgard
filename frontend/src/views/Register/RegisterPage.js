@@ -1,29 +1,23 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './LoginPage.css';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useState } from "react";
+import "./RegisterPage.css";
 
-const LoginPage = ({ onLogin }) => {
+
+
+const RegisterPage = () => {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
-    const navigate = useNavigate();
 
-    // Mock login function
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoginError('');
-
+    const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost:3001/user/login', {
+            const response = await axios.post('http://localhost:3001/user/register', {
+                username,
                 email,
                 password,
             });
-
-            const token = response.data.token;
-            localStorage.setItem('token', token);
-            navigate("/content")
-            // onLogin();
+    
         } catch (error) {
             if (error.response) {
                 if (error.response.status === 401) {
@@ -37,15 +31,7 @@ const LoginPage = ({ onLogin }) => {
                 setLoginError('An error occurred. Please try again later.');
             }
         }
-/*
-        if (email === 'mpinzon@csu.fullerton.edu' && password === 'test') {
-            onLogin();
-        } else {
-            setLoginError('Invalid login credentials');
-        }
-*/
-    };
-
+    }
 
     return (
         <div id="home" className="homeDiv">
@@ -59,16 +45,19 @@ const LoginPage = ({ onLogin }) => {
             <div className="overlay-content"></div>
             <nav>
                 <img src="/image_2024-10-06_115327155-removebg-preview.png" className="logo" alt="Logo" />
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
             </nav>
             <div className="content">
                 <div className="leftSide">
+                <h1 id="registerTitle">Create an Account</h1>
                     <div className="formContainer">
                         <form onSubmit={handleSubmit}>
+                            <input
+                                type="string"
+                                placeholder="Username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
                             <input
                                 type="email"
                                 placeholder="Email"
@@ -83,15 +72,10 @@ const LoginPage = ({ onLogin }) => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            <div className="checkbox-group">
-                                <input type="checkbox" id="saveUserId" />
-                                <label htmlFor="saveUserId">Save User ID</label>
-                            </div>
+                            
                             <button type="submit" className="login-button">Log In</button>
                             {loginError && <p className="error">{loginError}</p>}
                             <div className="link-group">
-                                <a href="/register">Create an Account</a>
-                                <a href="#">Forgot ID/Password?</a>
                                 <a href="#">Security & Help</a>
                             </div>
                         </form>
@@ -104,6 +88,6 @@ const LoginPage = ({ onLogin }) => {
             </div>
         </div>
     );
-};
+}
 
-export default LoginPage;
+export default RegisterPage;
