@@ -11,6 +11,9 @@ ul li a.active {
     color: #00a8ff;
 }  
 
-body {
-    background-color: black;
+.navbar-link{
+    color:black;
 }
+
+
+
