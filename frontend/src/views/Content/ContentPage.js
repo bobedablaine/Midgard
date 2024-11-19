@@ -59,9 +59,7 @@ const ContentPage = () => {
 
     return (
         <>
-            <section className="right-panel">
-                <NavBar />
-            </section>
+            <NavBar />
             <div className="container">
                 <Sidebar
                     chapters={textbookData.chapters}

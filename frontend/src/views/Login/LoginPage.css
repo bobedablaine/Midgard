@@ -122,7 +122,7 @@
     height: 100%;
 }
 
-nav {
+.login-navbar {
     width: 100%;
     display: flex;
     align-items: center;
@@ -130,18 +130,18 @@ nav {
     padding: 10px 0;
 }
 
-nav ul {
+.login-navbar ul {
     list-style: none;
     text-align: right;
     margin-right: 100px;
 }
 
-nav ul li {
+.login-navbar ul li {
     display: inline-block;
     margin: 10px 20px;
 }
 
-nav ul li a {
+.login-navbar ul li a {
     color: #fff;
     text-decoration: none;
     font-size: 26px;
@@ -195,7 +195,33 @@ nav ul li a {
     transition: ease-in-out 0.3s;
 }
 
+.register-button {
+    width: 80%;
+    padding: 12px;
+    margin: 12px;
+    background: transparent;
+    color: white;
+    border: solid 1px #fff;
+    cursor: pointer;
+    font-size: 18px;
+    transition: ease-in-out 0.3s;
+}
+
 .login-button:hover {
     border-color: #0874dc;
     color: #0874dc;
+}
+
+#registerTitle {
+    font-size: 24px;
+    display:flex;
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    color:gray;
+    padding-left: 40px;
+}
+
+.link-group a:hover{
+    color:#0874dc
 }

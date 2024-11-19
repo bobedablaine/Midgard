@@ -57,13 +57,13 @@ const LoginPage = ({ onLogin }) => {
                 Your browser does not support the video tag.
             </video>
             <div className="overlay-content"></div>
-            <nav>
+            <nav className="login-navbar">
                 <img src="/image_2024-10-06_115327155-removebg-preview.png" className="logo" alt="Logo" />
-                <ul>
+                {/* <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
-                </ul>
+                </ul> */}
             </nav>
             <div className="content">
                 <div className="leftSide">

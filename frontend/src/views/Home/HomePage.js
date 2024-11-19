@@ -4,9 +4,7 @@ const HomePage = () => {
 
     return (
         <>
-            <section className="right-panel">
-                <NavBar />
-            </section>
+            <NavBar />
             <div className="container">
                 <main className="main-content">
                     <h1>Home</h1>
