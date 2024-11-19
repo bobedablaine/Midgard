@@ -1,12 +1,12 @@
+import axios from "axios";
 import NavBar from "../../components/NavBar.js";
 
 const SettingsPage = () => {
+    const user = axios.get()
 
     return (
         <>
-            <section className="right-panel">
-                <NavBar />
-            </section>
+            <NavBar />
             <div className="container">
                 <main className="main-content">
                     <h1>Settings</h1>

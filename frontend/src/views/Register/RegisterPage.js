@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import "./RegisterPage.css";
-
 
 
 const RegisterPage = () => {
@@ -73,9 +71,10 @@ const RegisterPage = () => {
                                 required
                             />
                             
-                            <button type="submit" className="login-button">Log In</button>
+                            <button type="submit" className="register-button">Register</button>
                             {loginError && <p className="error">{loginError}</p>}
                             <div className="link-group">
+                                <a href="/">Already have an Account?</a>
                                 <a href="#">Security & Help</a>
                             </div>
                         </form>

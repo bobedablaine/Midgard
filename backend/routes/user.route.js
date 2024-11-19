@@ -3,6 +3,7 @@ import { Router } from "express"
 import { getUserData, signup } from "../controller/user.controller.js"
 import { registerController } from "../controller/register.controller.js"
 import loginController from "../controller/login.controller.js"; // Correct import
+import { getUserFromToken } from "../auth.middleware.js";
 
 const userRoute = Router()
 
@@ -16,5 +17,6 @@ userRoute.post("/login", (req, res, next) => {
 }, loginController);
 userRoute.get("/get-user/:id", getUserData)
 userRoute.post("/signup", signup)
+userRoute.get("/profile", getUserFromToken)
 
 export default userRoute;
