@@ -7,7 +7,6 @@ const LoginPage = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
-    const navigate = useNavigate();
 
     // Mock login function
     const handleSubmit = async (e) => {
@@ -22,8 +21,7 @@ const LoginPage = ({ onLogin }) => {
 
             const token = response.data.token;
             localStorage.setItem('token', token);
-            navigate("/content")
-            // onLogin();
+            window.location.reload();
         } catch (error) {
             if (error.response) {
                 if (error.response.status === 401) {

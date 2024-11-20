@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const RegisterPage = () => {
@@ -7,6 +8,7 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async () => {
         try {
@@ -15,6 +17,8 @@ const RegisterPage = () => {
                 email,
                 password,
             });
+            console.log("trying to navigate: " + response);
+            //navigate("/login", {replace: true})  //REGISTER DOESN'T LOG THE USER IN CAUSING REDUNDANCY
     
         } catch (error) {
             if (error.response) {
@@ -47,7 +51,7 @@ const RegisterPage = () => {
             <div className="content">
                 <div className="leftSide">
                 <h1 id="registerTitle">Create an Account</h1>
-                    <div className="formContainer">
+                    <div className="formContainer-register">
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="string"

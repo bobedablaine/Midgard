@@ -2,14 +2,21 @@ import axios from "axios";
 import NavBar from "../../components/NavBar.js";
 
 const SettingsPage = () => {
-    const user = axios.get()
+    const username = localStorage.getItem('username')
+    const email = localStorage.getItem('email')
 
     return (
         <>
             <NavBar />
             <div className="container">
                 <main className="main-content">
-                    <h1>Settings</h1>
+                    <img src="/defaultProfile.png" className="profile" alt="Profile" />
+                    <h1>Profile</h1>
+                    <br />
+                    <div>
+                        <p>{username}</p>
+                        <p>{email}</p>
+                    </div>
                 </main>
                 <section className="right-panel">
                     <div className="tools">

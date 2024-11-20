@@ -9,7 +9,7 @@ import SettingsPage from './views/Settings/SettingsPage.js';
 
 const App = () => {
     const [isAuthenticated, setAuthentication] = useState(false);
-    const [user, setUser] = useState(null);
+    // const [username, setUsername] = useState(null);
 
     async function fetchData(token) {
         if (token) {
@@ -19,7 +19,10 @@ const App = () => {
                     Authorization: token,
                 },
             })
-            console.log("response: " + response.userData) //STOPPED HERE WILL PICK BACK UP
+            const username = response.data.userData.username
+            const email = response.data.userData.email
+            localStorage.setItem('username', username)
+            localStorage.setItem('email', email)
             setAuthentication(true)
         } else {
             setAuthentication(false)
@@ -43,10 +46,10 @@ const App = () => {
                     <Route path="/login" element={isAuthenticated ? <Navigate to="/content" /> : <LoginPage />} />
                     <Route path="/content" element={isAuthenticated ? <ContentPage /> : <Navigate to="/login" />}/>
                     <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/home" element={<HomePage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/home" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />}/>
+                    <Route path="/settings" element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />} />
                     {/* Default route that redirects to Dashboard or Login based on authentication */}
-                    <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+                    <Route path="/" element={isAuthenticated ? <Navigate to="/content" /> : <Navigate to="/login" />} />
                 </Routes>
             </Router>
         </>
