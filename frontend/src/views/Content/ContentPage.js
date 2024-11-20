@@ -78,6 +78,14 @@ const ContentPage = () => {
                         <h3>{currentChapter.title}</h3>
                         {selectedSubsection !== null && <h4>{currentChapter.subsections[selectedSubsection].title}</h4>}
                         <p>{currentContent}</p>
+                        {currentContent.bulletPoints && (
+                            <ul>
+                                {currentContent.bulletPoints.map((bulletPoint, index) => (
+                                    <li key={index}>{bulletPoint}</li>
+                                ))}
+                            </ul>
+                        )}
+                        {currentContent.extraContent && <p>{currentContent.extraContent}</p>}
                         {selectedSubsection === null && (
                             <div className="image-box">
                                 <img src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2" alt="Chemistry illustration" />
