@@ -71,6 +71,38 @@
     margin-top: 30px;
 }
 
+.formContainer-register {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.8) 50%);
+    max-width: 325px;
+    height: 400px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    border: solid 2px #fff;
+    position: relative;
+    top: -40px;
+    margin-right: 20px;
+}
+
+.formContainer-register input {
+    width: 80%;
+    height: 35px;
+    background: transparent;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+}
+
+
 .checkbox-group {
     align-items: center;
     justify-content: flex-start;
@@ -150,6 +182,10 @@
 .logo {
     max-width: 380px; /* Adjust this value to your desired size */
     height: auto; /* Maintain the aspect ratio */
+}
+
+.profile {
+    max-width: 200px
 }
 
 .content {
