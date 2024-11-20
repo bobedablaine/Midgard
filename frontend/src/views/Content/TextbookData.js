@@ -58,6 +58,13 @@ const textbookData = {
       subsections: [
         {
           title: "2.1 Phishing Scams",
+          content: `
+            Phishing scams are a common form of social engineering where attackers use fake emails or websites to steal sensitive information.
+            Common signs of phishing:
+            - Urgent or alarming language
+            - Requests for sensitive information
+            - Links to unknown or suspicious websites
+            Below, you'll find a simulation to practice identifying phishing scams.`,
           content: "Phishing is one of the most prevalent types of scams, where attackers masquerade as legitimate entities to steal sensitive information like usernames, passwords, and credit card details.  <br />This section examines:",
 
           bulletPoints: [
