@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import textbookData from './TextbookData.js';
+import NavBar from '../../components/NavBar.js';
 import './styles.css';
 
 const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapter, selectedSubsection }) => {
@@ -57,44 +58,48 @@ const ContentPage = () => {
     const currentContent = selectedSubsection !== null ? currentChapter.subsections[selectedSubsection].content : currentChapter.content;
 
     return (
-        <div className="container">
-            <Sidebar
-                chapters={textbookData.chapters}
-                onSelectChapter={(index) => {
-                    setSelectedChapter(index);
-                    setSelectedSubsection(null);
-                }}
-                onSelectSubsection={setSelectedSubsection}
-                selectedChapter={selectedChapter}
-                selectedSubsection={selectedSubsection}
-            />
-            <main className="main-content">
-                <h2>{textbookData.title}</h2>
-                <h3>by {textbookData.author}</h3>
-                <div className="chapter">
-                    <h3>{currentChapter.title}</h3>
-                    {selectedSubsection !== null && <h4>{currentChapter.subsections[selectedSubsection].title}</h4>}
-                    <p>{currentContent}</p>
-                    {selectedSubsection === null && (
-                        <div className="image-box">
-                            <img src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2" alt="Chemistry illustration" />
-                            <p>Yay computer science :D .</p>
-                        </div>
-                    )}
-                </div>
-            </main>
-            <section className="right-panel">
-                <div className="tools">
-                    <button>Test me</button>
-                    <button>Practical exercise</button>
-                    <button>Further reading</button>
-                </div>
-                <div className="chat-box">
-                    <div className="chat-message">Hi, any questions for me?</div>
-                    <input type="text" placeholder="Type your message..." />
-                </div>
-            </section>
-        </div>
+        <>
+            <NavBar />
+            <div className="container">
+                <Sidebar
+                    chapters={textbookData.chapters}
+                    onSelectChapter={(index) => {
+                        setSelectedChapter(index);
+                        setSelectedSubsection(null);
+                    }}
+                    onSelectSubsection={setSelectedSubsection}
+                    selectedChapter={selectedChapter}
+                    selectedSubsection={selectedSubsection}
+                />
+                <main className="main-content">
+                    <h2>{textbookData.title}</h2>
+                    <h3>by {textbookData.author}</h3>
+                    <div className="chapter">
+                        <h3>{currentChapter.title}</h3>
+                        {selectedSubsection !== null && <h4>{currentChapter.subsections[selectedSubsection].title}</h4>}
+                        <p>{currentContent}</p>
+                        {selectedSubsection === null && (
+                            <div className="image-box">
+                                <img src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2" alt="Chemistry illustration" />
+                                <p>Yay computer science :D .</p>
+                            </div>
+                        )}
+                    </div>
+                </main>
+                <section className="right-panel">
+                    <div className="tools">
+                        <button>Test me</button>
+                        <button>Practical exercise</button>
+                        <button>Further reading</button>
+                    </div>
+                    <div className="chat-box">
+                        <div className="chat-message">Hi, any questions for me?</div>
+                        <input type="text" placeholder="Type your message..." />
+                    </div>
+                </section>
+            </div>
+        </>
+        
     );
 };
 

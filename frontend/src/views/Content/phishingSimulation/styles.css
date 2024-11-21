@@ -1,0 +1,39 @@
+.phishing-simulation-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.email-display {
+    margin-bottom: 20px;
+}
+
+.actions {
+    margin-bottom: 20px;
+}
+
+.actions button {
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.feedback {
+    margin-top: 20px;
+}
+
+.feedback.correct {
+    color: green;
+}
+
+.feedback.incorrect {
+    color: red;
+}
+
+.score {
+    margin-top: 20px;
+}

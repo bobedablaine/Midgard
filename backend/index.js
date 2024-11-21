@@ -16,7 +16,7 @@ app.use("/user", userRoute); //creating a route for user related functions
 
 const mongoConnect = async () => {
     try {
-        await mongoose.connect("mongodb://localhost:27017");
+        await mongoose.connect("mongodb+srv://tvuser:sO1XLuLvX9ogZ01z@testcluster0.p9xa7.mongodb.net/");
 
         console.log("Connected to MongoDB");
         app.listen(PORT, () => {

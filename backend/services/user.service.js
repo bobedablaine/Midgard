@@ -6,5 +6,11 @@ export const getUserByEmail = async (email) => {
 }
 
 export const createNewUser = async (userData) => {
-    await User.create(userData)
+    const user = await User.create(userData)
+    return user
+}
+
+export const getUserByToken = async (userId) => {
+    const user = await User.findById(userId)
+    return user
 }
