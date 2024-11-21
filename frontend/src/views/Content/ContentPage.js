@@ -88,8 +88,8 @@ const ContentPage = () => {
                         {currentContent.extraContent && <p>{currentContent.extraContent}</p>}
                         {selectedSubsection === null && (
                             <div className="image-box">
-                                <img src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2" alt="Chemistry illustration" />
-                                <p>Yay computer science :D .</p>
+                                <img src={currentChapter.image} alt="Textbook Chapter Image" />
+                                <p>Computer Security!</p>
                             </div>
                         )}
                     </div>
