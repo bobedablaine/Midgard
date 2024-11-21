@@ -31,7 +31,7 @@ export const getUserFromToken = async (req, res) => {
         const parsedUser = JSON.parse(userDecoded)
         const userId = parsedUser.userId;
         const user = await getUserByToken(userId)
-        console.log("user: " + user)
+        //console.log("user: " + user)
         res.json({userData: user});
     } catch (err) {
         console.log(err)
