@@ -183,3 +183,13 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.bullet-points {
+    list-style-type: disc; /* Disc-shaped bullet points */
+    margin: 0; /* Removes default margins */
+    padding-left: 20px; /* Indents the list for readability */
+}
+
+.bullet-points li {
+    margin-bottom: 8px; /* Adds spacing between each bullet point */
+    line-height: 1.6; /* Improves readability */
+}
