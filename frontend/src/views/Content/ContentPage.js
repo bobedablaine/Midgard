@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import textbookData from './TextbookData.js';
 import NavBar from '../../components/NavBar.js';
+import PhishingSimulationPage from '../../components/phishingSimulation/phishingEmails.js';
+
 import './styles.css';
 
 const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapter, selectedSubsection }) => {
@@ -55,7 +57,10 @@ const ContentPage = () => {
     const [selectedSubsection, setSelectedSubsection] = useState(null);
 
     const currentChapter = textbookData.chapters[selectedChapter];
-    const currentContent = selectedSubsection !== null ? currentChapter.subsections[selectedSubsection].content : currentChapter.content;
+    const currentContent =
+        selectedSubsection !== null
+            ? currentChapter.subsections[selectedSubsection].content
+            : currentChapter.content;
 
     return (
         <>
@@ -76,19 +81,20 @@ const ContentPage = () => {
                     <h3>by {textbookData.author}</h3>
                     <div className="chapter">
                         <h3>{currentChapter.title}</h3>
-                        {selectedSubsection !== null && <h4>{currentChapter.subsections[selectedSubsection].title}</h4>}
-                        <p>{currentContent}</p>
-                        {currentContent.bulletPoints && (
-                            <ul>
-                                {currentContent.bulletPoints.map((bulletPoint, index) => (
-                                    <li key={index}>{bulletPoint}</li>
-                                ))}
-                            </ul>
+                        {selectedSubsection !== null && (
+                            <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
                         )}
-                        {currentContent.extraContent && <p>{currentContent.extraContent}</p>}
+                        <p>{currentContent}</p>
+                        {/* Add the Phishing Simulation for Chapter 2.1 */}
+                        {selectedChapter === 1 && selectedSubsection === 0 && (
+                            <PhishingSimulationPage />
+                        )}
                         {selectedSubsection === null && (
                             <div className="image-box">
-                                <img src={currentChapter.image} alt="Textbook Chapter Image" />
+                                <img
+                                    src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2"
+                                    alt="Chemistry illustration"
+                                />
                                 <p>Computer Security!</p>
                             </div>
                         )}
@@ -107,8 +113,8 @@ const ContentPage = () => {
                 </section>
             </div>
         </>
-        
     );
 };
 
 export default ContentPage;
+

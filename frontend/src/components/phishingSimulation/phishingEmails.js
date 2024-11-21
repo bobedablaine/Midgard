@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import phishingEmails from './PhishingData';
+import phishingEmails from './PhishingData.js';
 import './styles.css';
 
 const PhishingSimulationPage = () => {

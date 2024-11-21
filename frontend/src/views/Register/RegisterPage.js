@@ -17,7 +17,6 @@ const RegisterPage = () => {
                 email,
                 password,
             });
-            console.log("trying to navigate: " + response);
             //navigate("/login", {replace: true})  //REGISTER DOESN'T LOG THE USER IN CAUSING REDUNDANCY
     
         } catch (error) {
