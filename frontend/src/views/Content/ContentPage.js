@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import textbookData from './TextbookData.js';
 import NavBar from '../../components/NavBar.js';
 import PhishingSimulationPage from '../../components/phishingSimulation/phishingEmails.js';
+import PasswordStrengthTester from "../../components/PasswordStrengthTester/PasswordStrengthTester.js";
+
 
 import './styles.css';
 
@@ -84,11 +86,22 @@ const ContentPage = () => {
                         {selectedSubsection !== null && (
                             <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
                         )}
-                        <p>{currentContent}</p>
+                        <p dangerouslySetInnerHTML={{ __html: currentContent }} />
+                        {currentContent.bulletPoints && (
+                            <ul className="bullet-points">
+                                {currentContent.bulletPoints.map((bulletPoint, index) => (
+                                    <li key={index}>{bulletPoint}</li>
+                                ))}
+                            </ul>
+                        )}
                         {/* Add the Phishing Simulation for Chapter 2.1 */}
                         {selectedChapter === 1 && selectedSubsection === 0 && (
                             <PhishingSimulationPage />
                         )}
+                        {selectedChapter === 2 && selectedSubsection === 0 &&
+                            (<PasswordStrengthTester />
+                            )}
+
                         {selectedSubsection === null && (
                             <div className="image-box">
                                 <img
