@@ -11,6 +11,7 @@ const textbookData = {
         {
           title: "1.1 What is Cybersecurity?",
           content: "Cybersecurity encompasses the technologies, processes, and practices designed to protect devices, networks, programs, and data from unauthorized access or damage. In a world increasingly reliant on technology, cybersecurity has become critical to protecting sensitive information, maintaining privacy, and ensuring business continuity. <br />This section discusses:",
+          image: "https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2", 
           bulletPoints: [ // not sure how to render this as bullet points in the page or how to add the previous sentence as a new paragraph to lead into this list
             "The evolution of cybersecurity from early computer systems to modern-day challenges.",
             "How cybersecurity affects individuals, businesses, and governments.",
@@ -30,7 +31,6 @@ const textbookData = {
         {
           title: "1.3 Staying Safe Online",
           content: "Online safety begins with proactive measures and awareness. Simple habits can significantly reduce the risk of falling victim to cyberattacks.  <br />This section covers:",
-
           bulletPoints: [
             "Using strong, unique passwords for every account.",
             "Enabling two-factor authentication for added security.",
@@ -55,6 +55,7 @@ const textbookData = {
       title: "Chapter 2: Recognizing Scams",
       summary: "Learn how to identify and avoid different types of scams. Scams have become increasingly sophisticated, targeting individuals and organizations alike. This chapter delves into various types of online and offline scams, offering insight into how to identify them and best practices for protection.",
       content: "In this chapter, we explore the tactics scammers use to exploit individuals and gain access to sensitive information. By understanding the mechanics behind these common scams, readers will learn to recognize warning signs and employ strategies to avoid becoming a victim.",
+      image: "https://asegrad.tufts.edu/sites/g/files/lrezom691/files/styles/large/public/2024-08/computer-science-ms-outcome-1920x1280.jpg?itok=tjLtnikA",
       subsections: [
         {
           title: "2.1 Phishing Scams",
@@ -103,6 +104,7 @@ const textbookData = {
       title: "Chapter 3: Protecting Your Devices",
       summary: "In today’s digital landscape, personal devices like computers, tablets, and smartphones are constantly exposed to cyber threats. This chapter provides actionable tips to secure these devices against unauthorized access, malware, and data loss, ensuring personal information stays protected.",
       content: "This chapter introduces key strategies for keeping personal devices secure. Topics include computer security basics, mobile device best practices, avoiding malicious software, and data backup techniques. By understanding these essentials, readers will be better prepared to defend their devices from a range of cyber threats.",
+      image: "https://cybersecurity.tufts.edu/sites/g/files/lrezom1021/files/styles/large/public/2024-04/thinkstock-photos-683716072-1920x1280.jpg?itok=BHcRMwbp",
       subsections: [
         {
           title: "3.1 Securing Your Computer",
@@ -150,6 +152,7 @@ const textbookData = {
       title: "Chapter 4: Personal Privacy Online",
       summary: "In a world where much of our lives are shared online, protecting personal information is crucial. This chapter explores strategies for maintaining privacy on the internet and social media, helping readers control their digital presence and reduce exposure to potential threats.",
       content: "This chapter provides readers with essential guidelines for protecting personal privacy online. Topics covered include safeguarding identity, managing digital footprints, safe browsing habits, and maximizing privacy on social media. By following these practices, readers can navigate the online world more securely and responsibly.",
+      image: "https://cybersecurity.tufts.edu/sites/g/files/lrezom1021/files/styles/large/public/2024-04/thinkstock-photos-628527420-1920x1280.jpg?itok=AW1_k_6f",
       subsections: [
         {
           title: "4.1 Protecting Your Identity",
