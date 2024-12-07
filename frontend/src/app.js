@@ -6,35 +6,57 @@ import ContentPage from "./views/Content/ContentPage.js";
 import RegisterPage from './views/Register/RegisterPage.js';
 import HomePage from './views/Home/HomePage.js';
 import SettingsPage from './views/Settings/SettingsPage.js';
+import AuthService from './services/auth.service.js';
+
+
+axios.defaults.baseURL = 'http://localhost:3001/user';
 
 const App = () => {
     const [isAuthenticated, setAuthentication] = useState(false);
     // const [username, setUsername] = useState(null);
 
     async function fetchData(token) {
-        if (token) {
-            //if token exists, send user to content
-            const response = await axios.get('http://localhost:3001/user/profile', {
-                headers: {
-                    Authorization: token,
-                },
-            })
-            const username = response.data.userData.username
-            const email = response.data.userData.email
-            localStorage.setItem('username', username)
-            localStorage.setItem('email', email)
-            setAuthentication(true)
-        } else {
-            setAuthentication(false)
+        try {
+            if (token) {
+                console.log('Attempting to fetch user data with token:', token);
+                const response = await axios.get('/profile', {
+                    headers: {
+                        Authorization: token,
+                    }
+                });
+                console.log('Response received:', response.data);
+
+                const username = response.data.userData.username;
+                const email = response.data.userData.email;
+                localStorage.setItem('username', username);
+                localStorage.setItem('email', email);
+                setAuthentication(true);
+            } else {
+                console.log('No token found');
+                setAuthentication(false);
+            }
+        } catch (error) {
+            console.error('Fetch data error details:', {
+                message: error.message,
+                response: error.response?.data,
+                status: error.response?.status
+            });
+            setAuthentication(false);
+            localStorage.removeItem('token'); // Clear invalid token
         }
     }
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        
-        fetchData(token)
-        
+        if (token) {
+            fetchData(token);
+        }
     }, []);
+
+    const handleLogout = async () => {
+        await AuthService.logout();
+        setAuthentication(false);
+    };
 
     
     

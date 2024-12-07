@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import textbookData from './TextbookData.js';
 import NavBar from '../../components/NavBar.js';
 import PhishingSimulationPage from '../../components/phishingSimulation/phishingEmails.js';
 import PasswordStrengthTester from "../../components/PasswordStrengthTester/PasswordStrengthTester.js";
+import axios from 'axios';
 
 
 import './styles.css';
 
-const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapter, selectedSubsection }) => {
+const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapter, selectedSubsection, progress }) => {
     return (
         <aside className="sidebar">
             <div className="subscribe-box">
@@ -18,7 +19,7 @@ const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapte
             <div className="progress">
                 <label>Your progress</label>
                 <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: '60%' }}></div>
+                    <div className="progress-fill" style={{ width: `${progress}%` }}></div>
                 </div>
             </div>
             <nav className="course-navigation">
@@ -55,14 +56,73 @@ const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapte
 };
 
 const ContentPage = () => {
+    // Group all state declarations together
     const [selectedChapter, setSelectedChapter] = useState(0);
     const [selectedSubsection, setSelectedSubsection] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [userId, setUserId] = useState(localStorage.getItem('userId')); // Initialize from localStorage
 
     const currentChapter = textbookData.chapters[selectedChapter];
-    const currentContent =
-        selectedSubsection !== null
-            ? currentChapter.subsections[selectedSubsection].content
-            : currentChapter.content;
+    const currentContent = selectedSubsection !== null
+        ? currentChapter.subsections[selectedSubsection].content
+        : currentChapter.content;
+
+
+    useEffect(() => {
+        // Get userId from localStorage or your auth system
+        const storedUserId = localStorage.getItem('userId');
+        if (storedUserId) {
+            setUserId(storedUserId);
+            // Update fetchProgress call to use storedUserId directly
+            const fetchInitialProgress = async () => {
+                try {
+                    const response = await axios.get(`/api/users/progress/${storedUserId}`);
+                    if (response.data.success) {
+                        setProgress(response.data.progress);
+                    }
+                } catch (error) {
+                    console.error('Error fetching progress:', error);
+                }
+            };
+            fetchInitialProgress();
+        }
+    }, []);
+
+    const fetchProgress = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get('/progress', {
+                headers: {
+                    Authorization: token
+                }
+            });
+            if (response.data.success) {
+                setProgress(response.data.progress);
+            }
+        } catch (error) {
+            console.error('Error fetching progress:', error);
+        }
+    };
+
+    const updateUserProgress = async (type, score) => {
+        try {
+            const payload = {
+                userId,
+                ...(type === 'chapter'
+                    ? { chapterIndex: selectedChapter, subsectionIndex: selectedSubsection }
+                    : { activityType: type, score })
+            };
+
+            const response = await axios.post('/api/users/progress', payload);
+            console.log(response)
+            if (response.data.success) {
+                setProgress(response.data.progress);
+                console.log(response)
+            }
+        } catch (error) {
+            console.error('Error updating progress:', error);
+        }
+    };
 
     return (
         <>
@@ -77,6 +137,7 @@ const ContentPage = () => {
                     onSelectSubsection={setSelectedSubsection}
                     selectedChapter={selectedChapter}
                     selectedSubsection={selectedSubsection}
+                    progress={progress}  // Add this prop
                 />
                 <main className="main-content">
                     <h2>{textbookData.title}</h2>
@@ -96,11 +157,15 @@ const ContentPage = () => {
                         )}
                         {/* Add the Phishing Simulation for Chapter 2.1 */}
                         {selectedChapter === 1 && selectedSubsection === 0 && (
-                            <PhishingSimulationPage />
+                            <PhishingSimulationPage
+                                onComplete={(score) => updateUserProgress('phishingSimulation', score)}
+                            />
                         )}
-                        {selectedChapter === 2 && selectedSubsection === 0 &&
-                            (<PasswordStrengthTester />
-                            )}
+                        {selectedChapter === 2 && selectedSubsection === 0 && (
+                            <PasswordStrengthTester
+                                onComplete={(score) => updateUserProgress('passwordTester', score)}
+                            />
+                        )}
 
                         {selectedSubsection === null && (
                             <div className="image-box">
