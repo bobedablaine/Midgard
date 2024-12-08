@@ -5,6 +5,7 @@ import userRoute from "./routes/user.route.js"
 import cors from "cors";
 import UserProgress from "./model/userProgress.js";
 import User from "./model/user.js";
+import openaiRoute from './routes/openai.route.js';
 
 dotenv.config();
 
@@ -19,6 +20,9 @@ app.use(cors({
 const PORT = 3001;
 
 app.use(express.json());
+
+app.use("/openai", openaiRoute);
+
 
 // Add a test route
 app.get('/test', (req, res) => {
