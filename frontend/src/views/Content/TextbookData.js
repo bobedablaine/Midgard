@@ -283,7 +283,7 @@ const textbookData = {
       title: "Chapter 5: Moving and Manipulating Files",
       summary: "This chapter focuses on file management in Linux, covering essential commands for navigating directories, copying and moving files, creating and removing directories, and viewing or editing file content.",
       content: "Linux provides powerful command-line tools for file management. In this chapter, readers will learn how to efficiently navigate and organize their files and directories, ensuring seamless workflow and data handling.",
-      image: "https://example.com/linux-file-management.jpg",
+      image: "https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/2X/7/78c42837d43e6483cfff3c1b20d6d27ae89e198d.png",
       subsections: [
         {
           title: "5.1 Navigating Directories",
@@ -355,6 +355,7 @@ const textbookData = {
       title: "Chapter 6: A Bit of Plumbing",
       summary: "This chapter explores advanced Linux command-line features such as redirection, pipes, file permissions, and combining commands for more efficient workflows.",
       content: "Building on file management skills, this chapter introduces powerful features of the Linux command line to streamline operations and enhance productivity.",
+      image: "https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/2X/6/60d1b71b8e3736d7f49b0550ad39c53253de7d17.png",
       subsections: [
         {
           title: "6.1 Redirection and Pipes",
@@ -426,6 +427,7 @@ const textbookData = {
       title: "Chapter 7: The Command Line and the Superuser",
       summary: "This chapter delves into administrative tasks, including managing users and groups, system monitoring, and working with the superuser privileges.",
       content: "Linux provides powerful tools for system administration. In this chapter, readers will explore the superuser role, user management, and system maintenance commands.",
+      image: "https://ubuntucommunity.s3.us-east-2.amazonaws.com/original/2X/1/12687b59a76cd5746f1c7e7d534818d3d3a5f61f.png",
       subsections: [
         {
           title: "7.1 Introduction to the Superuser",

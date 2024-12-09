@@ -344,7 +344,6 @@ const ContentPage = () => {
                                         src={currentChapter.image}
                                         alt={`Image for ${currentChapter.title}`}
                                     />
-                                    <p>Computer Security!</p>
                                 </div>
                             </>
                         )}
