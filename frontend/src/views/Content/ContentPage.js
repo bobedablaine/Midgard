@@ -237,7 +237,10 @@ const ContentPage = () => {
         const furtherReadingsArr = ["https://www.cisco.com/site/us/en/learn/topics/security/what-is-cybersecurity.html",
             "https://www.stickmancyber.com/cybersecurity-blog/is-your-business-vulnerable-start-identifying-cybersecurity-risks",
             "https://www.fcc.gov/communications-business-opportunities/cybersecurity-small-businesses",
-            "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online"]
+            "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online",
+            "https://linuxcommand.org/lc3_lts0050.php",
+            "https://ss64.com",
+            "https://linuxize.com/post/how-to-create-groups-in-linux/"]
 
         window.open(furtherReadingsArr[currentChapter.title[8] - 1]); 
     }
