@@ -80,7 +80,7 @@ const ContentPage = () => {
     const [selectedChapter, setSelectedChapter] = useState(0);
     const [selectedSubsection, setSelectedSubsection] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [userId, setUserId] = useState(localStorage.getItem('userId')); 
+    const [userProgressDoc, setUserProgressDoc] = useState(null);    const [userId, setUserId] = useState(localStorage.getItem('userId'));
     const [chatInput, setChatInput] = useState('');
     const [chatMessages, setChatMessages] = useState([{ text: 'Hi, any questions for me?', isBot: true }]);
     const [loading, setLoading] = useState(false);
@@ -101,48 +101,70 @@ const ContentPage = () => {
         ? currentChapter.subsections[selectedSubsection].extraContent
         : null;
 
-    useEffect(() => {
-        const fetchProgress = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.log('No token found');
-                    return;
-                }
-                console.log('Attempting to fetch progress with token:', token);
+    const updateChapterProgress = async (chapterIndex, subsectionIndex = null) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.log('No token found');
+                return;
+            }
 
-                const response = await axios.get('http://localhost:3001/progress/user-progress', {
+            const payload = {
+                activityType: 'chapterProgress',
+                chapterData: {
+                    chapterIndex: chapterIndex,
+                    subsectionIndex: subsectionIndex,
+                    completed: true,
+                    completedAt: new Date()
+                }
+            };
+
+            const response = await axios.post(
+                'http://localhost:3001/user/progress',
+                payload,
+                {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
-                });
-
-                console.log('Full progress response:', response);
-
-                if (response.data) {
-                    console.log('Progress data received:', response.data);
-                    setProgress(response.data.progress || 0);
-                } else {
-                    console.error('No data in response');
                 }
-            } catch (error) {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.error('Error response:', error.response.data);
-                    console.error('Error status:', error.response.status);
-                    console.error('Error headers:', error.response.headers);
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    console.error('No response received:', error.request);
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    console.error('Error setting up request:', error.message);
-                }
+            );
+            console.log("hisss:", response)
+
+            if (response.data.success) {
+                // Update local progress state
+                setProgress(response.data.progress);
+                fetchProgress(); // Refresh progress data
             }
-        };
+        } catch (error) {
+            console.error('Error updating chapter progress:', error);
+        }
+    };
 
+    const fetchProgress = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.log('No token found');
+                return;
+            }
+
+            const response = await axios.get('http://localhost:3001/progress/user-progress', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.data) {
+                setProgress(response.data.progress || 0);
+                setUserProgressDoc(response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching progress:', error);
+        }
+    };
+    useEffect(() => {
         fetchProgress();
     }, []);
 
@@ -172,11 +194,17 @@ const ContentPage = () => {
         }
     };
 
-    const goToNextPage = () => {
+    const goToNextPage = async () => {
         const chapterCount = textbookData.chapters.length;
         const currentChapter = textbookData.chapters[selectedChapter];
         const currentSubsections = currentChapter.subsections || [];
         const subsectionCount = currentSubsections.length;
+
+        // Update progress before changing page
+        await updateChapterProgress(
+            selectedChapter,
+            selectedSubsection !== null ? selectedSubsection : null
+        );
 
         // State updates
         if (selectedSubsection === null) {
@@ -267,6 +295,7 @@ const ContentPage = () => {
                     selectedChapter={selectedChapter}
                     selectedSubsection={selectedSubsection}
                     progress={progress}
+                    userProgressDoc={userProgressDoc}
                 />
                 <main className="main-content">
                     <h2>{textbookData.title}</h2>
