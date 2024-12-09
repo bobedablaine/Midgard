@@ -96,6 +96,13 @@ const ContentPage = () => {
         ? currentChapter.subsections[selectedSubsection].content
         : currentChapter.content;
 
+    const currentBulletPoints = selectedSubsection !== null
+        ? currentChapter.subsections[selectedSubsection].bulletPoints
+        : null;
+
+    const currentExtraContent = selectedSubsection !== null
+        ? currentChapter.subsections[selectedSubsection].extraContent
+        : null;
 
     useEffect(() => {
         const fetchProgress = async () => {
@@ -243,31 +250,38 @@ const ContentPage = () => {
                     <div className="chapter" style={{ position: 'relative', paddingBottom: '60px' }}>
                         <h3>{currentChapter.title}</h3>
                         {selectedSubsection !== null && (
-                            <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
-                        )}
-                        <p dangerouslySetInnerHTML={{ __html: currentContent }} />
-                        {currentContent.bulletPoints && (
-                            <ul className="bullet-points">
-                                {currentContent.bulletPoints.map((bulletPoint, index) => (
-                                    <li key={index} dangerouslySetInnerHTML={{ __html: bulletPoint }} />
+                            <>
+                                <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
+                                <p dangerouslySetInnerHTML={{ __html: currentContent }}></p>
+                                {currentBulletPoints && (
+                                    <ul className="bullet-points">
+                                        {currentBulletPoints.map((point, index) => (
+                                            <li key={index} dangerouslySetInnerHTML={{ __html: point }}></li>
+                                        ))}
+                                    </ul>
+                                )}
+                                {currentExtraContent && currentExtraContent.map((paragraph, index) => (
+                                    <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }}></p>
                                 ))}
-                            </ul>
+                                {selectedChapter === 1 && selectedSubsection === 0 && (
+                                  <PhishingSimulationPage />
+                                )}
+                                {selectedChapter === 2 && selectedSubsection === 0 && (
+                                  <PasswordStrengthTester />
+                                )}
+                            </>
                         )}
-                        {selectedChapter === 1 && selectedSubsection === 0 && (
-                            <PhishingSimulationPage/>
-                        )}
-                        {selectedChapter === 2 && selectedSubsection === 0 && (
-                            <PasswordStrengthTester />
-                        )}
-
                         {selectedSubsection === null && (
-                            <div className="image-box">
-                                <img
-                                    src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2"
-                                    alt="Chemistry illustration"
-                                />
-                                <p>Computer Security!</p>
-                            </div>
+                            <>
+                                <p>{currentContent}</p>
+                                <div className="image-box">
+                                    <img
+                                        src={currentChapter.image}
+                                        alt={`Image for ${currentChapter.title}`}
+                                    />
+                                    <p>Computer Security!</p>
+                                </div>
+                            </>
                         )}
                         <button onClick={goToNextPage} className="next-page-button">Next Page</button>
                     </div>
