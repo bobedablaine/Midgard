@@ -1,12 +1,10 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Dark background and white text for contrast */
-    background-color: #000000; 
-    color: #fff;
+    background-color: #121212; /* Slightly lighter black for less harshness */
+    color: #f0f0f0; /* Softer white text */
 }
 
 .container {
@@ -18,12 +16,12 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.8) 50%);
+    background: linear-gradient(to bottom, #1a1a1a, #121212); /* Smoother gradient */
     padding: 20px;
-    border-radius: 8px;
-    border: 2px solid #fff;
-    color: #fff;
-    box-shadow: none;
+    border-radius: 12px; /* Increased radius for softer corners */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter, translucent borders */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6); /* Softer shadows */
+    color: #e0e0e0; /* Softer text color */
 }
 
 .subscribe-box {
@@ -40,20 +38,32 @@ body {
     color: #fff;
 }
 
+
+.subscribe-box input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+}
+
 .subscribe-box button {
     width: 100%;
     padding: 10px;
     background: transparent;
     color: #fff;
-    border: 1px solid #fff;
+    border: none;
     border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: ease-in-out 0.3s;
 }
-
 .subscribe-box button:hover {
     border-color: #0874dc;
     color: #0874dc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .progress {
@@ -61,9 +71,9 @@ body {
 }
 
 .progress-bar {
-    background-color: #444;
+    background-color: #333;
     height: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
@@ -85,20 +95,22 @@ body {
     padding: 5px 0;
 }
 
+
 .chapter-item a {
     text-decoration: none;
-    color: #fff;
+    color: #e0e0e0;
     cursor: pointer;
     display: block;
     padding: 5px;
     border-radius: 4px;
     transition: ease-in-out 0.3s;
     margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05); /* Subtle background for hover effect */
 }
 
 .chapter-item a:hover {
     color: #0874dc;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Add the transition for the blind effect */
@@ -107,7 +119,16 @@ body {
     padding-left: 20px;
     max-height: 0; /* Collapsed by default */
     overflow: hidden; 
-    transition: max-height 0.3s ease, opacity 0.3s ease;}
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.subsection-list {
+    list-style-type: none;
+    padding-left: 20px;
+    max-height: 0; /* Collapsed by default */
+    overflow: hidden; 
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
 
 .subsection-list.expanded {
     max-height: 500px;
@@ -135,12 +156,12 @@ body {
 
 /* Main Content Styles */
 .main-content {
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.8) 50%);
+    background: linear-gradient(to top, rgba(20, 20, 20, 0.9), rgba(20, 20, 20, 0.9));
     padding: 20px;
-    border-radius: 8px;
-    border: 2px solid #fff;
-    color: #fff;
-    box-shadow: none;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    color: #f0f0f0;
 }
 
 .main-content h2 {
@@ -155,7 +176,8 @@ body {
 }
 
 .main-content p {
-    line-height: 1.6;
+    line-height: 1.8; /* Increased for readability */
+    color: #d0d0d0;
     margin-bottom: 15px;
 }
 
@@ -172,12 +194,12 @@ body {
 
 /* Right Panel Styles */
 .right-panel {
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.8) 50%);
+    background: linear-gradient(to bottom, #1a1a1a, #121212);
     padding: 20px;
-    border-radius: 8px;
-    border: 2px solid #fff;
-    color: #fff;
-    box-shadow: none;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    color: #e0e0e0;
 }
 
 .tools {
@@ -191,8 +213,9 @@ body {
     padding: 10px;
     background: transparent;
     color: #fff;
-    border: 1px solid #fff;
-    border-radius: 4px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: ease-in-out 0.3s;
 }
@@ -200,14 +223,15 @@ body {
 .tools button:hover {
     border-color: #0874dc;
     color: #0874dc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .chat-box {
-    border: 1px solid #fff;
-    border-radius: 4px;
-    padding: 10px;
-    background: transparent;
-    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Lighter border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    border-radius: 8px;
+    background: #1a1a1a;
+    color: #e0e0e0;
 }
 
 .chat-message {
@@ -218,7 +242,7 @@ body {
     width: calc(100% - 20px);
     padding: 10px;
     background: transparent;
-    border: 1px solid #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     color: #fff;
 }
@@ -508,12 +532,14 @@ body {
     text-align: center; /* Ensures the title is centered */
 }
 
+
+/* Results Grid */
 .results-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust columns dynamically */
-    gap: 20px; /* Space between grid items */
-    width: 100%; /* Occupies the container's width */
-    max-width: 1200px; /* Optional: restrict width for better aesthetics */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px; /* Slightly closer grid for aesthetics */
+    width: 100%;
+    max-width: 1200px;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -521,12 +547,19 @@ body {
 .result-item {
     background: #1a1a1a;
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     color: #fff;
     text-align: left;
     box-sizing: border-box;
-    min-width: 250px; /* Prevents collapsing */
+}
+
+.result-item p {
+    margin: 5px 0;
+}
+
+.result-item span {
+    font-weight: bold;
 }
 
 button {
