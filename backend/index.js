@@ -7,6 +7,8 @@ import UserProgress from "./model/userProgress.js";
 import User from "./model/user.js";
 import openaiRoute from './routes/openai.route.js';
 import progressRoute from './routes/progress.route.js';
+import securityRoute from './routes/url.scanner.js';
+
 
 
 dotenv.config();
@@ -51,5 +53,8 @@ const mongoConnect = async () => {
 // Add these test routes
 
 app.use("/progress", progressRoute);
+
+app.use('/security', securityRoute);
+
 
 mongoConnect();

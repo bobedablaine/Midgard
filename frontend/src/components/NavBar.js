@@ -15,13 +15,14 @@ const NavBar = () => {
                         <NavLink to="/content" className="navbar-link">Content</NavLink>
                     </li>
                     <li>
+                        <NavLink to="/tools" className="navbar-link">Tools</NavLink>
+                    </li>
+                    <li>
                         <NavLink to="/settings" className="navbar-link">Settings</NavLink>
                     </li>
-                
                 </ul>
             </nav>
         </div>
     );
 };
-
 export default NavBar;
