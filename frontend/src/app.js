@@ -7,6 +7,8 @@ import RegisterPage from './views/Register/RegisterPage.js';
 import HomePage from './views/Home/HomePage.js';
 import SettingsPage from './views/Settings/SettingsPage.js';
 import AuthService from './services/auth.service.js';
+import { ToolsPage, URLScannerPage } from './views/tools/index.js';
+
 
 
 axios.defaults.baseURL = 'http://localhost:3001/user';
@@ -72,6 +74,8 @@ const App = () => {
                     <Route path="/settings" element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />} />
                     {/* Default route that redirects to Dashboard or Login based on authentication */}
                     <Route path="/" element={isAuthenticated ? <Navigate to="/content" /> : <Navigate to="/login" />} />
+                    <Route path="/tools" element={isAuthenticated ? <ToolsPage /> : <Navigate to="/login" />} />
+                    <Route path="/tools/url-scanner" element={isAuthenticated ? <URLScannerPage /> : <Navigate to="/home" />} />
                 </Routes>
             </Router>
         </>

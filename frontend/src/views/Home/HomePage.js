@@ -25,8 +25,8 @@ const HomePage = () => {
                     <h1>Learn</h1>
                 </div>
                 <div className="content-Box">
-                    <NavLink to="/content">
-                        <img src="/cyberTools2.jpg" className="homePicture" alt="Textbook" />
+                    <NavLink to="/tools">
+                        <img src="/cyberTools2.jpg" className="homePicture" alt="Tools" />
                     </NavLink>
                     <h1>Tools</h1>
                 </div>
