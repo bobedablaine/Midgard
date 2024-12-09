@@ -8,6 +8,7 @@ import HomePage from './views/Home/HomePage.js';
 import SettingsPage from './views/Settings/SettingsPage.js';
 import AuthService from './services/auth.service.js';
 import { ToolsPage, URLScannerPage } from './views/tools/index.js';
+import PasswordGeneratorPage from './views/tools/passwordPage/passwordGenerator.js';
 
 
 
@@ -75,7 +76,8 @@ const App = () => {
                     {/* Default route that redirects to Dashboard or Login based on authentication */}
                     <Route path="/" element={isAuthenticated ? <Navigate to="/content" /> : <Navigate to="/login" />} />
                     <Route path="/tools" element={isAuthenticated ? <ToolsPage /> : <Navigate to="/login" />} />
-                    <Route path="/tools/url-scanner" element={isAuthenticated ? <URLScannerPage /> : <Navigate to="/home" />} />
+                    <Route path="/tools/url-scanner" element={isAuthenticated ? <URLScannerPage /> : <Navigate to="/login" />} />
+                    <Route path="/tools/password-generator" element={isAuthenticated ? <PasswordGeneratorPage /> : <Navigate to="/login" />} />
                 </Routes>
             </Router>
         </>
