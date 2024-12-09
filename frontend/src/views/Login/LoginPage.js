@@ -81,16 +81,10 @@ const LoginPage = ({ onLogin }) => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            <div className="checkbox-group">
-                                <input type="checkbox" id="saveUserId" />
-                                <label htmlFor="saveUserId">Save User ID</label>
-                            </div>
                             <button type="submit" className="login-button">Log In</button>
                             {loginError && <p className="error">{loginError}</p>}
                             <div className="link-group">
                                 <a href="/register">Create an Account</a>
-                                <a href="#">Forgot ID/Password?</a>
-                                <a href="#">Security & Help</a>
                             </div>
                         </form>
                     </div>

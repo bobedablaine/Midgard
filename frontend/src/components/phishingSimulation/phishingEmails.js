@@ -79,7 +79,7 @@ const PhishingSimulationPage = () => {
 
     return (
         <div className="phishing-simulation-container">
-            <h2>Phishing Email Simulation</h2>
+            <h2 style={{ color: "black" }}>Phishing Email Simulation</h2>
             <div className="email-display">
                 <p><strong>Sender:</strong> {currentEmail.sender}</p>
                 <p><strong>Subject:</strong> {currentEmail.subject}</p>

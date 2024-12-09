@@ -28,11 +28,6 @@ const Sidebar = ({ chapters, onSelectChapter, selectedChapter, selectedSubsectio
 
     return (
         <aside className="sidebar">
-            <div className="subscribe-box">
-                <input type="email" placeholder="Enter your email" />
-                <button>Subscribe</button>
-                <p>Receive a weekly email containing the next unit.</p>
-            </div>
             <div className="progress">
                 <label>Your progress</label>
                 <div className="progress-bar">

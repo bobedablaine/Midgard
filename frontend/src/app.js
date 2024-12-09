@@ -71,7 +71,7 @@ const App = () => {
                     <Route path="/home" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />}/>
                     <Route path="/settings" element={isAuthenticated ? <SettingsPage /> : <Navigate to="/login" />} />
                     {/* Default route that redirects to Dashboard or Login based on authentication */}
-                    <Route path="/" element={isAuthenticated ? <Navigate to="/content" /> : <Navigate to="/login" />} />
+                    <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />} />
                 </Routes>
             </Router>
         </>
