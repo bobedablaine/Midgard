@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {AlertTriangle, Shield} from "lucide-react";
+import { AlertTriangle, Shield } from "lucide-react";
 
 const URLScannerPage = () => {
     const [url, setUrl] = useState('');
     const [scanning, setScanning] = useState(false);
     const [results, setResults] = useState(null);
     const [error, setError] = useState(null);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,11 +19,17 @@ const URLScannerPage = () => {
         setError(null);
 
         try {
+            const token = localStorage.getItem('token');
+            console.log('Starting :', token);
+
+            if (!token) {
+                console.error('No token found in localStorage');
+                return;
+            }
             const response = await fetch('http://localhost:3001/security/scan-url', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ url })
             });
@@ -126,7 +131,7 @@ const URLScannerPage = () => {
                     </div>
                 )}
 
-                {results && (
+                {results && results.virusTotal && (
                     <div style={{ marginTop: '20px' }}>
                         <h2 style={{ marginBottom: '16px' }}>Scan Results</h2>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -148,23 +153,6 @@ const URLScannerPage = () => {
                                 <p style={{ marginTop: '8px', color: '#666' }}>
                                     Detection Ratio: {results.virusTotal.detectRatio}
                                 </p>
-                            </div>
-
-                            <div style={{
-                                padding: '16px',
-                                border: '1px solid #ddd',
-                                borderRadius: '4px'
-                            }}>
-                                <h3 style={{ marginBottom: '8px' }}>Safe Browsing Check</h3>
-                                <span style={{
-                                    padding: '4px 8px',
-                                    borderRadius: '12px',
-                                    fontSize: '14px',
-                                    backgroundColor: results.googleSafeBrowsing.status === 'clean' ? '#E8F5E9' : '#FFE8E8',
-                                    color: results.googleSafeBrowsing.status === 'clean' ? '#2E7D32' : '#D63939'
-                                }}>
-                                    {results.googleSafeBrowsing.status}
-                                </span>
                             </div>
                         </div>
                     </div>

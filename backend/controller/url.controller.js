@@ -10,8 +10,7 @@ export const scanURL = async (req, res) => {
 
         // Parallel API calls for better performance
         const [virusTotalResults, safeBrowsingResults] = await Promise.all([
-            checkVirusTotal(url),
-            checkGoogleSafeBrowsing(url)
+            checkVirusTotal(url)
         ]);
 
         res.json({
@@ -30,35 +29,44 @@ export const scanURL = async (req, res) => {
 
 async function checkVirusTotal(url) {
     try {
-        // Step 1: Submit URL for scanning
-        const submitResponse = await axios.post('https://www.virustotal.com/vtapi/v2/url/scan', null, {
-            params: {
-                apikey: process.env.VIRUSTOTAL_API_KEY,
-                url: url
+        // Submit URL for scanning
+        const submitResponse = await axios.post(
+            'https://www.virustotal.com/api/v3/urls',
+            new URLSearchParams({ url }).toString(),
+            {
+                headers: {
+                    'x-apikey': process.env.VIRUSTOTAL_API_KEY,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             }
-        });
+        );
+
+        const scanId = submitResponse.data.data.id;
 
         // Wait a few seconds for analysis
         await new Promise(resolve => setTimeout(resolve, 3000));
 
-        // Step 2: Get scan results
-        const resource = submitResponse.data.scan_id;
-        const resultResponse = await axios.get('https://www.virustotal.com/vtapi/v2/url/report', {
-            params: {
-                apikey: process.env.VIRUSTOTAL_API_KEY,
-                resource: resource
+        // Get scan results
+        const resultResponse = await axios.get(
+            `https://www.virustotal.com/api/v3/analyses/${scanId}`,
+            {
+                headers: {
+                    'x-apikey': process.env.VIRUSTOTAL_API_KEY
+                }
             }
-        });
+        );
 
         const results = resultResponse.data;
-        const positives = results.positives || 0;
-        const total = results.total || 0;
+        const positives = Object.values(results.data.attributes.results || {})
+            .filter(result => result.category === 'malicious').length;
+
+        const total = Object.keys(results.data.attributes.results || {}).length;
 
         return {
             status: positives > 0 ? 'malicious' : 'clean',
             detectRatio: `${positives}/${total}`,
-            threats: Object.entries(results.scans || {})
-                .filter(([_, scan]) => scan.detected)
+            threats: Object.entries(results.data.attributes.results || {})
+                .filter(([_, scan]) => scan.category === 'malicious')
                 .map(([vendor, scan]) => `${vendor}: ${scan.result}`)
         };
     } catch (error) {
@@ -70,7 +78,7 @@ async function checkVirusTotal(url) {
 async function checkGoogleSafeBrowsing(url) {
     try {
         const response = await axios.post(
-            `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${process.env.GOOGLE_SAFE_BROWSING_KEY}`,
+            `https://safebrowsing.googleapis.com/v3/threatMatches:find?key=${process.env.GOOGLE_SAFE_BROWSING_KEY}`,
             {
                 client: {
                     clientId: "your-client-id",
