@@ -281,7 +281,11 @@ const ContentPage = () => {
                                         {showTerminal() && (
                                             <div className="terminal-container">
                                                 <h3>Practice Terminal {index + 1}</h3>
-                                                <TerminalComponent terminalId={`${selectedChapter}-${selectedSubsection}-${index}`} />
+                                                <TerminalComponent 
+                                                    terminalId={`${selectedChapter}-${selectedSubsection}-${index}`} 
+                                                    chapterNum={parseInt(selectedChapter) + 1} 
+                                                    subsectionNum={parseInt(selectedSubsection) + 1} 
+                                                />
                                             </div>
                                         )}
                                     </React.Fragment>
