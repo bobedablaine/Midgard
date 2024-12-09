@@ -5,7 +5,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     /* Dark background and white text for contrast */
-    background-color: #000; 
+    background-color: #000000; 
     color: #fff;
 }
 
@@ -275,3 +275,172 @@ body {
     100% { transform: rotate(360deg); }
   }
   
+  .logo-wrap {
+    display: block;
+    width: 100%;
+    height: 50vh;
+    background-color: gray;
+    
+  }
+
+  #backgroundHomeVideo {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+.tint {
+    position: absolute;
+    width: 100%;
+    height: 50vh;
+    background-color: black;
+    opacity: 50%;
+}
+
+.homelogo {
+    position: absolute;
+    left: 40%;
+
+    max-width: 380px; /* Adjust this value to your desired size */
+    height: auto; /* Maintain the aspect ratio */
+}
+
+.container-Boxes {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    
+    padding: 20px;
+}
+
+.content-Box {
+    display: inline-block;
+    padding: 20px;
+    margin: auto;
+    width: auto;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    color: #fff;
+    box-shadow: none;
+    text-align: center;
+}
+
+.homePicture {
+    width: auto;
+    height: 300px;
+}
+
+.homeLink {
+    text-decoration: none;
+    color: white;
+
+}
+
+.settingsImg {
+    width: 250px; /* Set the width of the image */
+    height: 250px; /* Set the height of the image */
+    border-radius: 50%; /* This makes the image a perfect circle */
+    object-fit: cover; /* Ensures the image doesn't stretch or distort */
+}
+
+/* Settings Content */
+.settings-content {
+    margin: 40px 20px 10px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.8) 50%);
+    padding: 20px;
+    border-radius: 0px;
+    border: 2px solid #4d4d4d;
+    border-right: 0px;
+    border-left: 0px;
+    color: #fff;
+    box-shadow: none;
+}
+
+.settings-content h2 {
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.settings-content h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.settings-content p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.containerSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.containerSettings h1 {
+    font-size: 56px;
+}
+
+.settings-container {
+    display: flex;
+    height: 100vh; /* Optional: Full-page height */
+}
+
+.sidebar-settings {
+    margin-top: 30px;
+    width: 200px;
+    background-color: #000000;
+    padding: 20px;
+    border-right: 1px solid #383838;
+    border-left: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+}
+
+.sidebar-settings ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-settings li {
+    margin-bottom: 30px;
+}
+
+.sidebar-settings a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.sidebar-settings a:hover {
+    color: #007bff;
+}
+
+.settings-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+.settings-content section {
+    margin-bottom: 50px; /* Space between sections */
+    padding: 50px 20px 50px 20px;
+    border: 1px solid #9c9c9c;
+    border-radius: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    background-color: #000000;
+}
+
+.settings-title {
+    font-size: 48px;
+    margin: 30px;
+}
