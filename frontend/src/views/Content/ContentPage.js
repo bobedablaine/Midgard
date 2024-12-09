@@ -203,7 +203,11 @@ const ContentPage = () => {
 
     const goToFurtherReading = () => {
         const currentChapter = textbookData.chapters[selectedChapter];
-        const furtherReadingsArr = ["https://www.cisco.com/site/us/en/learn/topics/security/what-is-cybersecurity.html", "https://www.stickmancyber.com/cybersecurity-blog/is-your-business-vulnerable-start-identifying-cybersecurity-risks", "https://www.fcc.gov/communications-business-opportunities/cybersecurity-small-businesses", "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online"]
+        const furtherReadingsArr = ["https://www.cisco.com/site/us/en/learn/topics/security/what-is-cybersecurity.html",
+            "https://www.stickmancyber.com/cybersecurity-blog/is-your-business-vulnerable-start-identifying-cybersecurity-risks",
+            "https://www.fcc.gov/communications-business-opportunities/cybersecurity-small-businesses",
+            "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online"]
+
         window.open(furtherReadingsArr[currentChapter.title[8] - 1]); 
     }
 
