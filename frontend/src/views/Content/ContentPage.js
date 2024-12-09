@@ -8,6 +8,8 @@ import axios from 'axios';
 import './styles.css';
 import QuizPage from './QuizPage.js'; // Adjust path to wherever you placed QuizPage.js
 import PracticalExercisePage from './PracticalExercisePage.js'; // Adjust path
+import TerminalComponent from '../../components/Terminal/Terminal.js';
+import 'xterm/css/xterm.css';
 
 const Sidebar = ({ chapters, onSelectChapter, selectedChapter, selectedSubsection, onSelectSubsection, progress }) => {
     const [expandedChapters, setExpandedChapters] = useState([]);
@@ -176,29 +178,30 @@ const ContentPage = () => {
         const currentSubsections = currentChapter.subsections || [];
         const subsectionCount = currentSubsections.length;
 
+        // State updates
         if (selectedSubsection === null) {
             if (subsectionCount > 0) {
                 setSelectedSubsection(0);
-            } else {
-                if (selectedChapter < chapterCount - 1) {
-                    setSelectedChapter(selectedChapter + 1);
-                    setSelectedSubsection(null);
-                } else {
-                    // End of all chapters scenario
-                }
+            } else if (selectedChapter < chapterCount - 1) {
+                setSelectedChapter(selectedChapter + 1);
+                setSelectedSubsection(null);
             }
         } else {
             if (selectedSubsection < subsectionCount - 1) {
                 setSelectedSubsection(selectedSubsection + 1);
-            } else {
-                if (selectedChapter < chapterCount - 1) {
-                    setSelectedChapter(selectedChapter + 1);
-                    setSelectedSubsection(null);
-                } else {
-                    // End of all chapters scenario
-                }
+            } else if (selectedChapter < chapterCount - 1) {
+                setSelectedChapter(selectedChapter + 1);
+                setSelectedSubsection(null);
             }
         }
+
+        // Use setTimeout to ensure scroll happens after state update
+        setTimeout(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }, 100);
     };
 
     const goToFurtherReading = () => {
@@ -210,6 +213,13 @@ const ContentPage = () => {
 
         window.open(furtherReadingsArr[currentChapter.title[8] - 1]); 
     }
+
+    const showTerminal = () => {
+        const chapterNum = currentChapter.title.match(/Chapter (\d+)/);
+        if (!chapterNum) return false;
+        const num = parseInt(chapterNum[1]);
+        return num >= 5 && num <= 7 && selectedSubsection !== null;
+    };
 
     // If showQuiz or showExercise is true, we hide the main content and show the respective component
     if (showQuiz) {
@@ -266,7 +276,15 @@ const ContentPage = () => {
                                     </ul>
                                 )}
                                 {currentExtraContent && currentExtraContent.map((paragraph, index) => (
-                                    <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }}></p>
+                                    <React.Fragment key={index}>
+                                        <p dangerouslySetInnerHTML={{ __html: paragraph }}></p>
+                                        {showTerminal() && (
+                                            <div className="terminal-container">
+                                                <h3>Practice Terminal {index + 1}</h3>
+                                                <TerminalComponent terminalId={`${selectedChapter}-${selectedSubsection}-${index}`} />
+                                            </div>
+                                        )}
+                                    </React.Fragment>
                                 ))}
                                 {selectedChapter === 1 && selectedSubsection === 0 && (
                                   <PhishingSimulationPage />
