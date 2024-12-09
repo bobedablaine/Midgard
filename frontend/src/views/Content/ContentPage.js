@@ -201,6 +201,16 @@ const ContentPage = () => {
         }
     };
 
+    const goToFurtherReading = () => {
+        const currentChapter = textbookData.chapters[selectedChapter];
+        const furtherReadingsArr = ["https://www.cisco.com/site/us/en/learn/topics/security/what-is-cybersecurity.html",
+            "https://www.stickmancyber.com/cybersecurity-blog/is-your-business-vulnerable-start-identifying-cybersecurity-risks",
+            "https://www.fcc.gov/communications-business-opportunities/cybersecurity-small-businesses",
+            "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online"]
+
+        window.open(furtherReadingsArr[currentChapter.title[8] - 1]); 
+    }
+
     // If showQuiz or showExercise is true, we hide the main content and show the respective component
     if (showQuiz) {
         return (
@@ -285,7 +295,7 @@ const ContentPage = () => {
                     <div className="tools">
                         <button onClick={() => setShowQuiz(true)}>Test me</button>
                         <button onClick={() => setShowExercise(true)}>Practical exercise</button>
-                        <button>Further reading</button>
+                        <button onClick={goToFurtherReading}>Further reading</button>
                     </div>
                     <div className="chat-box">
                         <div className="chat-messages">
