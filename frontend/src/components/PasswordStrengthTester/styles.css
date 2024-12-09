@@ -7,6 +7,14 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #0874dc; /* Default blue text for the container */
+}
+
+.password-strength-tester h2 {
+    color: #0874dc !important; /* Force blue color for the title */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .password-strength-tester input {
@@ -20,10 +28,10 @@
 
 .password-strength-tester p {
     font-size: 14px;
-    color: #333;
+    color: #0874dc; /* Blue text for paragraphs */
 }
 
 .password-strength-tester strong {
     font-weight: bold;
-    color: #007bff;
+    color: #0874dc; /* Blue text for bold text */
 }

@@ -49,7 +49,6 @@ const RegisterPage = () => {
             </nav>
             <div className="content">
                 <div className="leftSide">
-                <h1 id="registerTitle">Create an Account</h1>
                     <div className="formContainer-register">
                         <form onSubmit={handleSubmit}>
                             <input
@@ -78,7 +77,6 @@ const RegisterPage = () => {
                             {loginError && <p className="error">{loginError}</p>}
                             <div className="link-group">
                                 <a href="/">Already have an Account?</a>
-                                <a href="#">Security & Help</a>
                             </div>
                         </form>
                     </div>

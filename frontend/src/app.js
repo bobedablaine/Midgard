@@ -76,7 +76,7 @@ const App = () => {
                     <Route path="/" element={isAuthenticated ? <Navigate to="/content" /> : <Navigate to="/login" />} />
                     <Route path="/tools" element={isAuthenticated ? <ToolsPage /> : <Navigate to="/login" />} />
                     <Route path="/tools/url-scanner" element={isAuthenticated ? <URLScannerPage /> : <Navigate to="/home" />} />
-                </Routes>
+
             </Router>
         </>
     );

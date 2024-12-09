@@ -28,11 +28,6 @@ const Sidebar = ({ chapters, onSelectChapter, selectedChapter, selectedSubsectio
 
     return (
         <aside className="sidebar">
-            <div className="subscribe-box">
-                <input type="email" placeholder="Enter your email" />
-                <button>Subscribe</button>
-                <p>Receive a weekly email containing the next unit.</p>
-            </div>
             <div className="progress">
                 <label>Your progress</label>
                 <div className="progress-bar">
@@ -96,6 +91,13 @@ const ContentPage = () => {
         ? currentChapter.subsections[selectedSubsection].content
         : currentChapter.content;
 
+    const currentBulletPoints = selectedSubsection !== null
+        ? currentChapter.subsections[selectedSubsection].bulletPoints
+        : null;
+
+    const currentExtraContent = selectedSubsection !== null
+        ? currentChapter.subsections[selectedSubsection].extraContent
+        : null;
 
     useEffect(() => {
         const fetchProgress = async () => {
@@ -199,6 +201,16 @@ const ContentPage = () => {
         }
     };
 
+    const goToFurtherReading = () => {
+        const currentChapter = textbookData.chapters[selectedChapter];
+        const furtherReadingsArr = ["https://www.cisco.com/site/us/en/learn/topics/security/what-is-cybersecurity.html",
+            "https://www.stickmancyber.com/cybersecurity-blog/is-your-business-vulnerable-start-identifying-cybersecurity-risks",
+            "https://www.fcc.gov/communications-business-opportunities/cybersecurity-small-businesses",
+            "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online"]
+
+        window.open(furtherReadingsArr[currentChapter.title[8] - 1]); 
+    }
+
     // If showQuiz or showExercise is true, we hide the main content and show the respective component
     if (showQuiz) {
         return (
@@ -243,31 +255,38 @@ const ContentPage = () => {
                     <div className="chapter" style={{ position: 'relative', paddingBottom: '60px' }}>
                         <h3>{currentChapter.title}</h3>
                         {selectedSubsection !== null && (
-                            <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
-                        )}
-                        <p dangerouslySetInnerHTML={{ __html: currentContent }} />
-                        {currentContent.bulletPoints && (
-                            <ul className="bullet-points">
-                                {currentContent.bulletPoints.map((bulletPoint, index) => (
-                                    <li key={index} dangerouslySetInnerHTML={{ __html: bulletPoint }} />
+                            <>
+                                <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
+                                <p dangerouslySetInnerHTML={{ __html: currentContent }}></p>
+                                {currentBulletPoints && (
+                                    <ul className="bullet-points">
+                                        {currentBulletPoints.map((point, index) => (
+                                            <li key={index} dangerouslySetInnerHTML={{ __html: point }}></li>
+                                        ))}
+                                    </ul>
+                                )}
+                                {currentExtraContent && currentExtraContent.map((paragraph, index) => (
+                                    <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }}></p>
                                 ))}
-                            </ul>
+                                {selectedChapter === 1 && selectedSubsection === 0 && (
+                                  <PhishingSimulationPage />
+                                )}
+                                {selectedChapter === 2 && selectedSubsection === 0 && (
+                                  <PasswordStrengthTester />
+                                )}
+                            </>
                         )}
-                        {selectedChapter === 1 && selectedSubsection === 0 && (
-                            <PhishingSimulationPage/>
-                        )}
-                        {selectedChapter === 2 && selectedSubsection === 0 && (
-                            <PasswordStrengthTester />
-                        )}
-
                         {selectedSubsection === null && (
-                            <div className="image-box">
-                                <img
-                                    src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2"
-                                    alt="Chemistry illustration"
-                                />
-                                <p>Computer Security!</p>
-                            </div>
+                            <>
+                                <p>{currentContent}</p>
+                                <div className="image-box">
+                                    <img
+                                        src={currentChapter.image}
+                                        alt={`Image for ${currentChapter.title}`}
+                                    />
+                                    <p>Computer Security!</p>
+                                </div>
+                            </>
                         )}
                         <button onClick={goToNextPage} className="next-page-button">Next Page</button>
                     </div>
@@ -276,7 +295,7 @@ const ContentPage = () => {
                     <div className="tools">
                         <button onClick={() => setShowQuiz(true)}>Test me</button>
                         <button onClick={() => setShowExercise(true)}>Practical exercise</button>
-                        <button>Further reading</button>
+                        <button onClick={goToFurtherReading}>Further reading</button>
                     </div>
                     <div className="chat-box">
                         <div className="chat-messages">
