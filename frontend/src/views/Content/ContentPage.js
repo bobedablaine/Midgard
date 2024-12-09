@@ -1,14 +1,31 @@
+// ContentPage.js
 import React, { useState, useEffect } from 'react';
-import textbookData from './TextbookData.js';
+import textbookData from './TextbookData.js'; // Adjust path if needed
 import NavBar from '../../components/NavBar.js';
 import PhishingSimulationPage from '../../components/phishingSimulation/phishingEmails.js';
 import PasswordStrengthTester from "../../components/PasswordStrengthTester/PasswordStrengthTester.js";
 import axios from 'axios';
-
-
 import './styles.css';
+import QuizPage from './QuizPage.js'; // Adjust path to wherever you placed QuizPage.js
+import PracticalExercisePage from './PracticalExercisePage.js'; // Adjust path
 
-const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapter, selectedSubsection, progress }) => {
+const Sidebar = ({ chapters, onSelectChapter, selectedChapter, selectedSubsection, onSelectSubsection, progress }) => {
+    const [expandedChapters, setExpandedChapters] = useState([]);
+
+    const handleChapterClick = (index) => {
+        if (expandedChapters.includes(index)) {
+            setExpandedChapters(expandedChapters.filter(chap => chap !== index));
+        } else {
+            setExpandedChapters([...expandedChapters, index]);
+        }
+        onSelectChapter(index);
+        onSelectSubsection(null);
+    };
+
+    useEffect(() => {
+        setExpandedChapters([selectedChapter]);
+    }, [selectedChapter]);
+
     return (
         <aside className="sidebar">
             <div className="subscribe-box">
@@ -25,30 +42,37 @@ const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapte
             <nav className="course-navigation">
                 <h3>Table of Contents</h3>
                 <ul className="chapter-list">
-                    {chapters.map((chapter, chapterIndex) => (
-                        <li key={chapterIndex} className="chapter-item">
-                            <a
-                                onClick={() => onSelectChapter(chapterIndex)}
-                                className={selectedChapter === chapterIndex ? 'selected' : ''}
-                            >
-                                {chapter.title}
-                            </a>
-                            {selectedChapter === chapterIndex && chapter.subsections && (
-                                <ul className="subsection-list">
-                                    {chapter.subsections.map((subsection, subsectionIndex) => (
-                                        <li key={subsectionIndex} className="subsection-item">
-                                            <a
-                                                onClick={() => onSelectSubsection(subsectionIndex)}
-                                                className={selectedSubsection === subsectionIndex ? 'selected' : ''}
-                                            >
-                                                {subsection.title}
-                                            </a>
-                                        </li>
-                                    ))}
+                    {chapters.map((chapter, chapterIndex) => {
+                        const isExpanded = expandedChapters.includes(chapterIndex);
+                        return (
+                            <li key={chapterIndex} className="chapter-item">
+                                <a 
+                                  onClick={() => handleChapterClick(chapterIndex)} 
+                                  className={selectedChapter === chapterIndex ? 'selected' : ''}
+                                >
+                                    {chapter.title}
+                                </a>
+                                <ul className={`subsection-list ${isExpanded ? 'expanded' : ''}`}>
+                                    {isExpanded && chapter.subsections && (
+                                        chapter.subsections.map((subsection, subsectionIndex) => (
+                                            <li key={subsectionIndex} className="subsection-item">
+                                                <a
+                                                    onClick={() => onSelectSubsection(subsectionIndex)}
+                                                    className={
+                                                        selectedChapter === chapterIndex && selectedSubsection === subsectionIndex 
+                                                            ? 'selected' 
+                                                            : ''
+                                                    }
+                                                >
+                                                    {subsection.title}
+                                                </a>
+                                            </li>
+                                        ))
+                                    )}
                                 </ul>
-                            )}
-                        </li>
-                    ))}
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
         </aside>
@@ -56,24 +80,34 @@ const Sidebar = ({ chapters, onSelectChapter, onSelectSubsection, selectedChapte
 };
 
 const ContentPage = () => {
-    // Group all state declarations together
     const [selectedChapter, setSelectedChapter] = useState(0);
     const [selectedSubsection, setSelectedSubsection] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [userId, setUserId] = useState(localStorage.getItem('userId')); // Initialize from localStorage
+    const [userId, setUserId] = useState(localStorage.getItem('userId')); 
+    const [chatInput, setChatInput] = useState('');
+    const [chatMessages, setChatMessages] = useState([{ text: 'Hi, any questions for me?', isBot: true }]);
+    const [loading, setLoading] = useState(false);
+
+    const [showQuiz, setShowQuiz] = useState(false);
+    const [showExercise, setShowExercise] = useState(false);
 
     const currentChapter = textbookData.chapters[selectedChapter];
     const currentContent = selectedSubsection !== null
         ? currentChapter.subsections[selectedSubsection].content
         : currentChapter.content;
 
+    const currentBulletPoints = selectedSubsection !== null
+        ? currentChapter.subsections[selectedSubsection].bulletPoints
+        : null;
+
+    const currentExtraContent = selectedSubsection !== null
+        ? currentChapter.subsections[selectedSubsection].extraContent
+        : null;
 
     useEffect(() => {
-        // Get userId from localStorage or your auth system
         const storedUserId = localStorage.getItem('userId');
         if (storedUserId) {
             setUserId(storedUserId);
-            // Update fetchProgress call to use storedUserId directly
             const fetchInitialProgress = async () => {
                 try {
                     const response = await axios.get(`/api/users/progress/${storedUserId}`);
@@ -88,41 +122,85 @@ const ContentPage = () => {
         }
     }, []);
 
-    const fetchProgress = async () => {
+    const fetchChatGPTResponse = async (userInput) => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get('/progress', {
-                headers: {
-                    Authorization: token
-                }
+            const response = await axios.post('http://localhost:3001/openai/chat', {
+                userInput: userInput
             });
-            if (response.data.success) {
-                setProgress(response.data.progress);
-            }
+            return response.data.reply;
         } catch (error) {
-            console.error('Error fetching progress:', error);
+            console.error('Error fetching response from backend:', error);
+            return 'Sorry, I could not get a response.';
         }
     };
 
-    const updateUserProgress = async (type, score) => {
-        try {
-            const payload = {
-                userId,
-                ...(type === 'chapter'
-                    ? { chapterIndex: selectedChapter, subsectionIndex: selectedSubsection }
-                    : { activityType: type, score })
-            };
+    const handleChatSubmit = async (e) => {
+        if (e.key === 'Enter' && chatInput.trim()) {
+            const userMessage = chatInput.trim();
+            setChatMessages(prev => [...prev, { text: userMessage, isBot: false }]);
+            setChatInput('');
+            
+            setLoading(true);
+            const response = await fetchChatGPTResponse(userMessage);
+            setLoading(false);
 
-            const response = await axios.post('/api/users/progress', payload);
-            console.log(response)
-            if (response.data.success) {
-                setProgress(response.data.progress);
-                console.log(response)
-            }
-        } catch (error) {
-            console.error('Error updating progress:', error);
+            setChatMessages(prev => [...prev, { text: response, isBot: true }]);
         }
     };
+
+    const goToNextPage = () => {
+        const chapterCount = textbookData.chapters.length;
+        const currentChapter = textbookData.chapters[selectedChapter];
+        const currentSubsections = currentChapter.subsections || [];
+        const subsectionCount = currentSubsections.length;
+
+        if (selectedSubsection === null) {
+            if (subsectionCount > 0) {
+                setSelectedSubsection(0);
+            } else {
+                if (selectedChapter < chapterCount - 1) {
+                    setSelectedChapter(selectedChapter + 1);
+                    setSelectedSubsection(null);
+                } else {
+                    // End of all chapters scenario
+                }
+            }
+        } else {
+            if (selectedSubsection < subsectionCount - 1) {
+                setSelectedSubsection(selectedSubsection + 1);
+            } else {
+                if (selectedChapter < chapterCount - 1) {
+                    setSelectedChapter(selectedChapter + 1);
+                    setSelectedSubsection(null);
+                } else {
+                    // End of all chapters scenario
+                }
+            }
+        }
+    };
+
+    // If showQuiz or showExercise is true, we hide the main content and show the respective component
+    if (showQuiz) {
+        return (
+            <>
+                <NavBar />
+                <div className="container">
+                    <QuizPage onBack={() => setShowQuiz(false)} />
+                </div>
+            </>
+        );
+    }
+
+    if (showExercise) {
+        return (
+            <>
+                <NavBar />
+                <div className="container">
+                    <PracticalExercisePage onBack={() => setShowExercise(false)} />
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
@@ -137,56 +215,70 @@ const ContentPage = () => {
                     onSelectSubsection={setSelectedSubsection}
                     selectedChapter={selectedChapter}
                     selectedSubsection={selectedSubsection}
-                    progress={progress}  // Add this prop
+                    progress={progress}
                 />
                 <main className="main-content">
                     <h2>{textbookData.title}</h2>
                     <h3>by {textbookData.author}</h3>
-                    <div className="chapter">
+                    <div className="chapter" style={{ position: 'relative', paddingBottom: '60px' }}>
                         <h3>{currentChapter.title}</h3>
                         {selectedSubsection !== null && (
-                            <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
-                        )}
-                        <p dangerouslySetInnerHTML={{ __html: currentContent }} />
-                        {currentContent.bulletPoints && (
-                            <ul className="bullet-points">
-                                {currentContent.bulletPoints.map((bulletPoint, index) => (
-                                    <li key={index}>{bulletPoint}</li>
+                            <>
+                                <h4>{currentChapter.subsections[selectedSubsection].title}</h4>
+                                <p dangerouslySetInnerHTML={{ __html: currentContent }}></p>
+                                {currentBulletPoints && (
+                                    <ul className="bullet-points">
+                                        {currentBulletPoints.map((point, index) => (
+                                            <li key={index} dangerouslySetInnerHTML={{ __html: point }}></li>
+                                        ))}
+                                    </ul>
+                                )}
+                                {currentExtraContent && currentExtraContent.map((paragraph, index) => (
+                                    <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }}></p>
                                 ))}
-                            </ul>
+                            </>
                         )}
-                        {/* Add the Phishing Simulation for Chapter 2.1 */}
-                        {selectedChapter === 1 && selectedSubsection === 0 && (
-                            <PhishingSimulationPage
-                                onComplete={(score) => updateUserProgress('phishingSimulation', score)}
-                            />
-                        )}
-                        {selectedChapter === 2 && selectedSubsection === 0 && (
-                            <PasswordStrengthTester
-                                onComplete={(score) => updateUserProgress('passwordTester', score)}
-                            />
-                        )}
-
                         {selectedSubsection === null && (
-                            <div className="image-box">
-                                <img
-                                    src="https://engineering.tufts.edu/sites/g/files/lrezom421/files/styles/embedded_large/public/Programs_Dept-ComputerScience_lrg_0.jpg?itok=nKHOb7F2"
-                                    alt="Chemistry illustration"
-                                />
-                                <p>Computer Security!</p>
-                            </div>
+                            <>
+                                <p>{currentContent}</p>
+                                <div className="image-box">
+                                    <img
+                                        src={currentChapter.image}
+                                        alt={`Image for ${currentChapter.title}`}
+                                    />
+                                    <p>Computer Security!</p>
+                                </div>
+                            </>
                         )}
+                        <button onClick={goToNextPage} className="next-page-button">Next Page</button>
                     </div>
                 </main>
                 <section className="right-panel">
                     <div className="tools">
-                        <button>Test me</button>
-                        <button>Practical exercise</button>
+                        <button onClick={() => setShowQuiz(true)}>Test me</button>
+                        <button onClick={() => setShowExercise(true)}>Practical exercise</button>
                         <button>Further reading</button>
                     </div>
                     <div className="chat-box">
-                        <div className="chat-message">Hi, any questions for me?</div>
-                        <input type="text" placeholder="Type your message..." />
+                        <div className="chat-messages">
+                            {chatMessages.map((msg, idx) => (
+                                <div key={idx} className={`chat-message ${msg.isBot ? 'bot' : 'user'}`}>
+                                    {msg.text}
+                                </div>
+                            ))}
+                            {loading && (
+                                <div className="loading-indicator">
+                                    <div className="spinner"></div>
+                                </div>
+                            )}
+                        </div>
+                        <input 
+                            type="text" 
+                            value={chatInput}
+                            onChange={(e) => setChatInput(e.target.value)}
+                            onKeyPress={handleChatSubmit}
+                            placeholder="Type your message..." 
+                        />
                     </div>
                 </section>
             </div>
@@ -195,4 +287,3 @@ const ContentPage = () => {
 };
 
 export default ContentPage;
-
