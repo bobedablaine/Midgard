@@ -221,6 +221,15 @@ const ContentPage = () => {
         return num >= 5 && num <= 7 && selectedSubsection !== null;
     };
 
+    // Add useEffect to handle scrolling
+    useEffect(() => {
+        // Find the main content element and scroll it to top
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.scrollTop = 0;
+        }
+    }, [selectedChapter, selectedSubsection]); // Trigger when chapter or subsection changes
+
     // If showQuiz or showExercise is true, we hide the main content and show the respective component
     if (showQuiz) {
         return (

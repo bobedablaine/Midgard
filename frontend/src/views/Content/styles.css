@@ -162,6 +162,28 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     color: #f0f0f0;
+    height: calc(100vh - 100px); /* Adjust height to viewport minus header/margins */
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* For Firefox */
+}
+
+/* Custom scrollbar styling for WebKit browsers */
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .main-content h2 {
