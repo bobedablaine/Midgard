@@ -559,4 +559,7 @@ button[onClick="onBack"] {
     font-weight: bold;
 }
 
+.tool-item {
+    margin: 40px;
+}
 
