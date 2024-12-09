@@ -96,22 +96,50 @@ const ContentPage = () => {
         ? currentChapter.subsections[selectedSubsection].content
         : currentChapter.content;
 
+
     useEffect(() => {
-        const storedUserId = localStorage.getItem('userId');
-        if (storedUserId) {
-            setUserId(storedUserId);
-            const fetchInitialProgress = async () => {
-                try {
-                    const response = await axios.get(`/api/users/progress/${storedUserId}`);
-                    if (response.data.success) {
-                        setProgress(response.data.progress);
-                    }
-                } catch (error) {
-                    console.error('Error fetching progress:', error);
+        const fetchProgress = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.log('No token found');
+                    return;
                 }
-            };
-            fetchInitialProgress();
-        }
+                console.log('Attempting to fetch progress with token:', token);
+
+                const response = await axios.get('http://localhost:3001/progress/user-progress', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Full progress response:', response);
+
+                if (response.data) {
+                    console.log('Progress data received:', response.data);
+                    setProgress(response.data.progress || 0);
+                } else {
+                    console.error('No data in response');
+                }
+            } catch (error) {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.error('Error response:', error.response.data);
+                    console.error('Error status:', error.response.status);
+                    console.error('Error headers:', error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.error('No response received:', error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.error('Error setting up request:', error.message);
+                }
+            }
+        };
+
+        fetchProgress();
     }, []);
 
     const fetchChatGPTResponse = async (userInput) => {

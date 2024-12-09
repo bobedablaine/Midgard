@@ -11,12 +11,10 @@ const PhishingSimulationPage = () => {
     const [isCompleted, setIsCompleted] = useState(false);
     const currentEmail = phishingEmails[currentEmailIndex];
 
-    // PhishingSimulationPage.js
     const submitProgress = async (finalScore) => {
         try {
             const token = localStorage.getItem('token');
             console.log('Starting submitProgress with score:', finalScore);
-            console.log('Token:', token);
 
             if (!token) {
                 console.error('No token found in localStorage');
@@ -29,25 +27,32 @@ const PhishingSimulationPage = () => {
             };
             console.log('Sending payload:', payload);
 
-            const response = await axios.post('/progress', payload, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+            // Update the axios request to use the full URL and proper configuration
+            const response = await axios.post(
+                'http://localhost:3001/user/progress',  // Full URL
+                payload,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
                 }
-            });
+            );
 
             console.log('Response from server:', response.data);
 
             if (response.data.success) {
                 alert(`Progress saved! Score: ${payload.score}%`);
+            } else {
+                console.error('Progress update failed:', response.data);
+                alert('Failed to save progress. Please try again.');
             }
         } catch (error) {
             console.error('Error in submitProgress:', error.response || error);
+            console.log('Full error object:', error);
             alert('Error saving progress. Check console for details.');
         }
     };
-
-
 
     const handleAnswer = (isPhishing) => {
         const isCorrect = isPhishing === currentEmail.isPhishing;
@@ -61,14 +66,14 @@ const PhishingSimulationPage = () => {
         }
     };
 
-    const handleNextEmail = () => {
+    const handleNextEmail = async () => {
         if (currentEmailIndex < phishingEmails.length - 1) {
             setCurrentEmailIndex(currentEmailIndex + 1);
             setFeedback(null);
         } else {
-            console.log('Simulation complete, final score:', score); // Add this log
             setIsCompleted(true);
-            submitProgress(score);
+            console.log('Simulation complete, final score:', score);
+            await submitProgress(score);
         }
     };
 
@@ -81,7 +86,7 @@ const PhishingSimulationPage = () => {
                 <p><strong>Body:</strong> {currentEmail.body}</p>
             </div>
             <div className="actions">
-                {!isCompleted && (
+                {!feedback && !isCompleted && (
                     <>
                         <button onClick={() => handleAnswer(true)}>This is Phishing</button>
                         <button onClick={() => handleAnswer(false)}>This is Legitimate</button>
@@ -89,13 +94,20 @@ const PhishingSimulationPage = () => {
                 )}
             </div>
 
-            {feedback && (
+            {feedback && !isCompleted && (
                 <div className={`feedback ${feedback.isCorrect ? 'correct' : 'incorrect'}`}>
                     <p>{feedback.isCorrect ? "Correct!" : "Incorrect."}</p>
                     <p>{feedback.explanation}</p>
                     <button onClick={handleNextEmail}>
                         {currentEmailIndex < phishingEmails.length - 1 ? 'Next Email' : 'Complete Simulation'}
                     </button>
+                </div>
+            )}
+
+            {isCompleted && (
+                <div className="completion-message">
+                    <h3>Simulation Completed!</h3>
+                    <p>Final Score: {Math.round((score / phishingEmails.length) * 100)}%</p>
                 </div>
             )}
 

@@ -20,21 +20,28 @@ export const authenticate = async (req, res, next) => {
 
 export const getUserFromToken = async (req, res) => {
     const token = req.headers.authorization;
-    console.log("token: " + token)
+    console.log("token:", token);
+
     if (!token) {
         return res.status(403).json({ error: 'Token is required' });
     }
+
     try {
-        const decoded = await jwt.decode(token, process.env.SECRET_KEY);
-        console.log("decoded: " + JSON.stringify(decoded, null, 2))
-        const userDecoded = JSON.stringify(decoded, null, 2)
-        const parsedUser = JSON.parse(userDecoded)
-        const userId = parsedUser.userId;
-        const user = await getUserByToken(userId)
-        //console.log("user: " + user)
+        // Remove 'Bearer ' prefix and then verify (not decode)
+        const actualToken = token.replace('Bearer ', '');
+        const decoded = jwt.verify(actualToken, process.env.SECRET_KEY);  // Changed from jwt.decode to jwt.verify
+        console.log("decoded:", decoded);
+
+        if (!decoded) {
+            return res.status(403).json({ error: 'Failed to decode token' });
+        }
+
+        const userId = decoded.userId;
+        const user = await getUserByToken(userId);
         res.json({userData: user});
     } catch (err) {
-        console.log(err)
+        console.log(err);
+        res.status(403).json({ error: 'Token verification failed' });
     }
 }
 
