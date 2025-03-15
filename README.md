@@ -8,7 +8,7 @@ Reminder to npm install to get dependencies for frontend and backend.
 3. Start Docker Desktop and ensure it is running. 
 4. Open a terminal and run 'docker pull ubuntu:latest' 
 
-##Starting the Application 
+## Starting the Application 
 1. Make sure Docker is running
 2. 'npm install' in the following directories:
 	- /Midgard
@@ -18,6 +18,7 @@ Reminder to npm install to get dependencies for frontend and backend.
 	- Make sure npm run start-terminal is one of them
         - Include mongo instructions here? 
 
-##Troubleshooting 
+## Troubleshooting 
 - Ensure Docker is running
-- Verify Ubuntu image is installed with 'docker images' 
+- Verify Ubuntu image is installed with 'docker images'
+- Will need individual API keys for AzureAPI and Google safe browsing
